@@ -737,19 +737,22 @@ function buildIconImagePrompt(animal, elementId, numerology, zodiac, blood) {
 
   return [
     "Create a square 1:1 SNS profile icon illustration for Image 2.0. Canvas ratio 1:1, recommended size 1024x1024.",
+    "Use the attached profile photo or current user icon as the visual reference. Do not copy it photorealistically; transform it into an original pixel art avatar blended with the diagnosis mascot.",
     "",
-    `Main character: a cute original pixel art ${animal.nameJa} pet mascot, large centered face and upper body, charming and memorable.`,
+    `Main character: a cute original pixel art ${animal.nameJa} pet mascot fused with the referenced person's icon impression, large centered face and upper body, charming and memorable.`,
     `Icon identity: ${element.ja} element, numerology ${numerology}, ${zodiacReading.ja}, ${blood} type mood.`,
     `Personality mood: ${animalCore?.resultTitle || animal.nameJa} / ${keywords}.`,
     `Five elements theme: ${element.en} / ${element.ja}, ${element.summary}`,
     `Blood type nuance: ${bloodReading.title}.`,
     "",
+    "Reference handling: preserve only the broad identity cues from the attached icon, such as hairstyle silhouette, glasses or accessories, favorite color mood, facial expression energy, and overall vibe. Avoid exact face duplication.",
+    "Blend design: make the avatar feel like the person has become this diagnosis animal mascot. Add small animal features naturally, such as ears, tail motif, fur pattern, or charm accessory, while keeping the referenced icon's recognizable mood.",
     "Visual style: premium 32-bit pixel art icon, clean silhouette, expressive eyes, crisp sprite-like edges, polished app icon quality.",
-    "Composition: centered mascot, face clearly visible at small size, soft circular elemental background, tiny five-elements charm mark, no crowded layout.",
+    "Composition: centered avatar mascot, face clearly visible at small size, soft circular elemental background, tiny five-elements charm mark, no crowded layout.",
     "Text rules: no text, no letters, no numbers, no badge labels. Use only visual symbols so the icon stays readable.",
     "Background: soft round backdrop using the five-elements accent color, warm off-white outer margin, subtle festival charm details.",
     "Quality: high detail pixel illustration, friendly, not realistic, not scary, no watermark, no logo, no extra limbs, no distorted face.",
-    "Output: one finished square SNS icon image, 1:1 aspect ratio, optimized for profile pictures and chat avatars."
+    "Output: one finished square SNS icon image, 1:1 aspect ratio, optimized for profile pictures and chat avatars, clearly based on the reference icon's atmosphere plus the diagnosis result."
   ].join("\n");
 }
 
@@ -766,7 +769,7 @@ function updateImagePromptModeUi() {
 
   if (imagePromptDescription) {
     imagePromptDescription.textContent = isIconMode
-      ? "1:1正方形のプロフィール画像を作るためのPromptです。顔が小さくならない、SNSで見やすいアイコンにします。"
+      ? "本人のアイコン画像をImage 2.0に添付して使うPromptです。雰囲気を参照しながら、診断どうぶつと合成した1:1正方形アイコンにします。"
       : "4:5縦長の診断結果カードを作るためのPromptです。スマホで共有しやすい1枚絵にします。";
   }
 
