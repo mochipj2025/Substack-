@@ -211,6 +211,19 @@ const fiveElementQuestions = [
   }
 ];
 
+const fiveElementQuestionWeights = {
+  q1: 1,
+  q2: 1,
+  q3: 1,
+  q4: 1,
+  q5: 1,
+  q6: 2,
+  q7: 2,
+  q8: 2,
+  q9: 2,
+  q10: 3
+};
+
 function setStep(step) {
   const isProfile = step === "profile";
   profileStep.classList.toggle("hidden", !isProfile);
@@ -313,10 +326,11 @@ function showProfileError(message) {
 function renderFiveElementQuestions() {
   fiveElementsQuestions.replaceChildren(
     ...fiveElementQuestions.map((question, index) => {
+      const weight = fiveElementQuestionWeights[question.id] || 1;
       const fieldset = document.createElement("fieldset");
       fieldset.className = "grid gap-3 rounded-lg border border-[#eadfd4] bg-[#fffaf4] p-4";
       fieldset.innerHTML = `
-        <legend class="px-2 text-sm font-black text-deep">Q${index + 1}. ${question.text}</legend>
+        <legend class="px-2 text-sm font-black text-deep">Q${index + 1}. ${question.text}${weight > 1 ? `（${weight}点）` : ""}</legend>
         ${question.options.map(([value, label]) => `
           <label class="flex gap-3 rounded-lg bg-white px-4 py-3 font-bold text-deep">
             <input type="radio" name="${question.id}" value="${value}" required>
@@ -341,7 +355,7 @@ function calculateFiveElementResult(formData) {
   for (const question of fiveElementQuestions) {
     const answer = formData.get(question.id);
     if (!answer) return null;
-    scores[answer] += 1;
+    scores[answer] += fiveElementQuestionWeights[question.id] || 1;
   }
 
   const highestScore = Math.max(...Object.values(scores));

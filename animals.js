@@ -530,10 +530,11 @@ function renderFiveElementScores(primaryElementId) {
 
   const sortedScores = getSortedElementScores(scores);
   const maxScore = Math.max(...sortedScores.map((item) => item.score), 1);
+  const totalScore = sortedScores.reduce((sum, item) => sum + item.score, 0);
   const subElement = sortedScores.find((item) => item.id !== primaryElementId && item.score > 0);
   fiveElementSubtype.textContent = subElement
-    ? `主属性 ${elements[primaryElementId].ja} / サブ属性 ${subElement.element.ja}`
-    : `主属性 ${elements[primaryElementId].ja}`;
+    ? `主属性 ${elements[primaryElementId].ja} / サブ属性 ${subElement.element.ja} / 合計${totalScore}点`
+    : `主属性 ${elements[primaryElementId].ja} / 合計${totalScore}点`;
 
   fiveElementScoreBars.replaceChildren(
     ...Object.entries(elements).map(([id, element]) => {
