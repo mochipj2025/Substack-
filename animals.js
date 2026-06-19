@@ -688,14 +688,16 @@ function buildImagePrompt(animal, elementId, numerology, zodiac, blood) {
   const numberReading = numerologyReadings[numerology] || numerologyReadings[3];
   const zodiacReading = zodiacReadings[zodiac] || zodiacReadings.capricorn;
   const bloodReading = bloodReadings[blood] || bloodReadings["不明"];
+  const resultTitle = buildResultSummaryTitle(animal, element, animalCore);
   const keywords = animalCore?.keywords?.slice(0, 4).join(", ") || "friendly, symbolic, personal";
   const strengths = animalCore?.strengths?.slice(0, 3).join(", ") || "warm presence, intuition, charm";
 
   return [
-    "Create a vertical 4:5 diagnosis result card illustration for Image 2.0.",
+    "Create a vertical 4:5 diagnosis result card illustration for Image 2.0. Canvas ratio 4:5, recommended size 1080x1350.",
     "",
+    `Main title text: 「${resultTitle}」`,
+    `Small readable badge labels: 「動物 ${animal.nameJa}」「五行 ${element.ja}」「数秘 ${numerology}」「星座 ${zodiacReading.ja}」「血液型 ${blood}型」`,
     `Main character: a cute original pixel art ${animal.nameJa} pet mascot, inspired by a Japanese fortune-telling result, not realistic, not scary.`,
-    `Diagnosis labels to include visually: 動物占い ${animal.nameJa}, 五行 ${element.ja}, 数秘 ${numerology}, 星座 ${zodiacReading.ja}, 血液型 ${blood}型.`,
     `Personality mood: ${animalCore?.resultTitle || animal.nameJa} / ${animalCore?.oneLine || "gentle personal charm"}.`,
     `Core keywords: ${keywords}.`,
     `Strengths to express: ${strengths}.`,
@@ -705,10 +707,11 @@ function buildImagePrompt(animal, elementId, numerology, zodiac, blood) {
     `Blood type mood: ${blood} type, ${bloodReading.title}.`,
     "",
     "Visual style: premium 32-bit pixel art, clean sprite-like mascot, soft Japanese festival card design, warm off-white paper texture, crisp edges, charming small icons, readable decorative layout.",
-    "Composition: vertical 4:5 layout, title area at the top, centered mascot in the middle, elemental aura behind it, five small diagnosis badges near the lower half, subtle lucky charm motifs, enough blank space for a polished mobile result card feeling.",
+    "Composition: vertical 4:5 layout. Top area: short Japanese title. Middle: centered mascot with elemental aura. Lower half: five small diagnosis badges. Bottom area: subtle lucky charm motifs and calm decorative frame.",
+    "Text rules: keep text short and large enough to read on a phone. Do not add long paragraphs. Use clean Japanese typography only for the title and five badges.",
     "Color direction: use the five-elements color as the main accent, balanced with warm white, deep charcoal, and festival red accents.",
     "Quality: high detail pixel illustration, polished game asset, no photorealism, no messy text, no watermark, no logo, no extra limbs, no distorted face.",
-    "Output: one finished shareable image, vertical 4:5 aspect ratio, result-card composition, optimized for mobile sharing."
+    "Output: one finished shareable image, vertical 4:5 aspect ratio, polished result-card composition, optimized for mobile sharing."
   ].join("\n");
 }
 
