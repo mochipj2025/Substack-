@@ -344,11 +344,12 @@ function calculateFiveElementResult(formData) {
     scores[answer] += 1;
   }
 
-  const priority = ["wood", "fire", "earth", "metal", "water"];
-  const element = priority.reduce((best, candidate) => {
-    if (scores[candidate] > scores[best]) return candidate;
-    return best;
-  }, "wood");
+  const highestScore = Math.max(...Object.values(scores));
+  const topElements = Object.entries(scores)
+    .filter(([, score]) => score === highestScore)
+    .map(([element]) => element);
+  const answers = fiveElementQuestions.map((question) => formData.get(question.id));
+  const element = [...answers].reverse().find((answer) => topElements.includes(answer)) || topElements[0];
 
   return {
     element,
@@ -437,7 +438,12 @@ questionsForm.addEventListener("submit", (event) => {
     birthDate: profile.birthDate,
     birth: getBirthMonthDay(profile.birthDate),
     zodiac: profile.zodiac,
-    blood: profile.bloodType
+    blood: profile.bloodType,
+    wood: String(fiveElementResult.scores.wood),
+    fire: String(fiveElementResult.scores.fire),
+    earth: String(fiveElementResult.scores.earth),
+    metal: String(fiveElementResult.scores.metal),
+    water: String(fiveElementResult.scores.water)
   });
   window.location.href = `animals.html?${params.toString()}`;
 });

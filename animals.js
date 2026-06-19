@@ -22,6 +22,9 @@ const fortuneCardElementJa = document.querySelector("#fortune-card-element-ja");
 const resultSummaryTitle = document.querySelector("#result-summary-title");
 const resultSummaryBody = document.querySelector("#result-summary-body");
 const resultSummaryChips = document.querySelector("#result-summary-chips");
+const fiveElementScorePanel = document.querySelector("#five-element-score-panel");
+const fiveElementSubtype = document.querySelector("#five-element-subtype");
+const fiveElementScoreBars = document.querySelector("#five-element-score-bars");
 const analysisAnimalBadge = document.querySelector("#analysis-animal-badge");
 const analysisAnimalTitle = document.querySelector("#analysis-animal-title");
 const analysisAnimalBody = document.querySelector("#analysis-animal-body");
@@ -320,6 +323,25 @@ function getZodiacAccuracyNote() {
   return `${source}から一般的な太陽星座の固定境界で見ています。境界日生まれは出生時刻・出生地で変わる場合があります。`;
 }
 
+function getFiveElementScores() {
+  const scores = {};
+  let hasScore = false;
+
+  for (const id of Object.keys(elements)) {
+    const value = Number(resultModeParams.get(id));
+    scores[id] = Number.isFinite(value) && value >= 0 ? value : 0;
+    if (scores[id] > 0) hasScore = true;
+  }
+
+  return hasScore ? scores : null;
+}
+
+function getSortedElementScores(scores) {
+  return Object.entries(scores)
+    .map(([id, score]) => ({ id, score, element: elements[id] }))
+    .sort((a, b) => b.score - a.score);
+}
+
 function setMode(nextMode) {
   viewMode = nextMode;
   modeButtons.forEach((button) => {
@@ -474,9 +496,12 @@ function renderResultSummary(animal, elementId, numerology, zodiac, blood) {
   }
 
   if (resultSummaryChips) {
+    const scores = getFiveElementScores();
+    const sortedScores = scores ? getSortedElementScores(scores) : [];
+    const subElement = sortedScores.find((item) => item.id !== elementId && item.score > 0);
     const chips = [
       `動物 ${animal.nameJa}`,
-      `五行 ${element.ja}`,
+      subElement ? `五行 ${element.ja} / サブ${subElement.element.ja}` : `五行 ${element.ja}`,
       `数秘 ${numerology}`,
       `星座 ${zodiacReading.ja}`,
       `血液型 ${blood}`
@@ -490,6 +515,45 @@ function renderResultSummary(animal, elementId, numerology, zodiac, blood) {
       })
     );
   }
+
+  renderFiveElementScores(elementId);
+}
+
+function renderFiveElementScores(primaryElementId) {
+  if (!fiveElementScorePanel || !fiveElementSubtype || !fiveElementScoreBars) return;
+
+  const scores = getFiveElementScores();
+  if (!scores) {
+    fiveElementScorePanel.classList.add("hidden");
+    return;
+  }
+
+  const sortedScores = getSortedElementScores(scores);
+  const maxScore = Math.max(...sortedScores.map((item) => item.score), 1);
+  const subElement = sortedScores.find((item) => item.id !== primaryElementId && item.score > 0);
+  fiveElementSubtype.textContent = subElement
+    ? `主属性 ${elements[primaryElementId].ja} / サブ属性 ${subElement.element.ja}`
+    : `主属性 ${elements[primaryElementId].ja}`;
+
+  fiveElementScoreBars.replaceChildren(
+    ...Object.entries(elements).map(([id, element]) => {
+      const score = scores[id] || 0;
+      const percentage = Math.max(8, Math.round((score / maxScore) * 100));
+      const row = document.createElement("div");
+      row.className = "grid gap-2";
+      row.innerHTML = `
+        <div class="flex items-center justify-between gap-3 text-sm font-black text-deep">
+          <span>${element.ja}</span>
+          <span>${score}点</span>
+        </div>
+        <div class="h-3 overflow-hidden rounded-full bg-[#fff4e8]">
+          <div class="h-full rounded-full bg-festival" style="width: ${percentage}%"></div>
+        </div>
+      `;
+      return row;
+    })
+  );
+  fiveElementScorePanel.classList.remove("hidden");
 }
 
 function renderList(target, items) {
