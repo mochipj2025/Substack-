@@ -25,6 +25,7 @@ const resultSummaryChips = document.querySelector("#result-summary-chips");
 const fiveElementScorePanel = document.querySelector("#five-element-score-panel");
 const fiveElementSubtype = document.querySelector("#five-element-subtype");
 const fiveElementScoreBars = document.querySelector("#five-element-score-bars");
+const savePdfButton = document.querySelector("#save-pdf-button");
 const analysisAnimalBadge = document.querySelector("#analysis-animal-badge");
 const analysisAnimalTitle = document.querySelector("#analysis-animal-title");
 const analysisAnimalBody = document.querySelector("#analysis-animal-body");
@@ -1018,5 +1019,6 @@ clearResultStockButton?.addEventListener("click", () => {
   renderStoredResults();
 });
 copyImagePromptButton?.addEventListener("click", copyImagePrompt);
+savePdfButton?.addEventListener("click", () => window.print());
 
 loadAnimals();

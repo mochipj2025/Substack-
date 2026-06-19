@@ -119,6 +119,43 @@
         linear-gradient(135deg, rgba(255, 244, 232, 0.92), rgba(255, 255, 255, 0.95)),
         radial-gradient(circle at 85% 12%, rgba(230, 126, 34, 0.18), transparent 30%);
     }
+
+    @media print {
+      @page {
+        margin: 12mm;
+        size: A4;
+      }
+
+      body {
+        background: #ffffff !important;
+        color: #26313b !important;
+      }
+
+      header,
+      footer,
+      .no-print,
+      #card-control-panel,
+      #image-prompt-section,
+      #result-stock-section,
+      #animal-library-section {
+        display: none !important;
+      }
+
+      main {
+        max-width: none !important;
+        padding: 0 !important;
+      }
+
+      section,
+      article {
+        box-shadow: none !important;
+        break-inside: avoid;
+      }
+
+      #personal-result-panel {
+        display: block !important;
+      }
+    }
   </style>
 </head>
 <body class="bg-base font-sans text-ink antialiased">
@@ -218,7 +255,10 @@
           <p class="text-sm font-black uppercase text-festivalDark">Your Result</p>
           <h2 class="mt-2 text-3xl font-black leading-tight text-deep sm:text-4xl">あなたの診断結果</h2>
           <p class="mt-4 leading-8 text-slate-600">このページでは、今回の診断で出た結果だけを表示します。ほかの結果を見たい時は、もう一度診断してください。</p>
-          <a href="diagnosis.html" class="mt-6 inline-flex min-h-12 items-center justify-center rounded-lg bg-festival px-5 py-3 font-black text-white shadow-sm transition hover:bg-festivalDark">診断しなおす</a>
+          <div class="no-print mt-6 flex flex-wrap gap-3">
+            <a href="diagnosis.html" class="inline-flex min-h-12 items-center justify-center rounded-lg bg-festival px-5 py-3 font-black text-white shadow-sm transition hover:bg-festivalDark">診断しなおす</a>
+            <button id="save-pdf-button" class="inline-flex min-h-12 items-center justify-center rounded-lg bg-deep px-5 py-3 font-black text-white shadow-sm transition hover:bg-festivalDark" type="button">PDF保存</button>
+          </div>
           <div class="mt-5 rounded-lg border border-[#eadfd4] bg-[#fffaf4] p-4">
             <p id="result-summary-title" class="text-2xl font-black leading-8 text-deep">結果を読み込み中</p>
             <p id="result-summary-body" class="mt-2 text-sm font-bold leading-7 text-slate-700"></p>
@@ -462,6 +502,6 @@
     ケツ印一家
   </footer>
 
-  <script src="animals.js?v=20260620-01" defer></script>
+  <script src="animals.js?v=20260620-02" defer></script>
 </body>
 </html>
