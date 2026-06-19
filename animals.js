@@ -487,7 +487,7 @@ function renderResultSummary(animal, elementId, numerology, zodiac, blood) {
   const animalCore = diagnosisWarehouse?.animalCore?.[animal.id];
 
   if (resultSummaryTitle) {
-    resultSummaryTitle.textContent = `${element.ja}の${animal.nameJa} / 数秘${numerology} / ${blood}型`;
+    resultSummaryTitle.textContent = buildResultSummaryTitle(animal, element, animalCore);
   }
 
   if (resultSummaryBody) {
@@ -517,6 +517,11 @@ function renderResultSummary(animal, elementId, numerology, zodiac, blood) {
   }
 
   renderFiveElementScores(elementId);
+}
+
+function buildResultSummaryTitle(animal, element, animalCore) {
+  const animalTitle = animalCore?.resultTitle || `${animal.nameJa}タイプ`;
+  return `${element.title}、${animalTitle}`;
 }
 
 function renderFiveElementScores(primaryElementId) {
