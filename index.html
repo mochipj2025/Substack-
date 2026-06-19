@@ -59,12 +59,12 @@
       <form id="profile-form" class="mt-6 grid gap-5">
         <label class="grid gap-2 text-sm font-black text-deep">
           お名前
-          <input id="user-name" class="min-h-12 rounded-lg border border-[#eadfd4] bg-white px-3 py-2 text-base font-bold text-deep" type="text" autocomplete="name" placeholder="もちスラ">
+          <input id="user-name" class="min-h-12 w-full min-w-0 rounded-lg border border-[#eadfd4] bg-white px-3 py-2 text-base font-bold text-deep" type="text" autocomplete="name" placeholder="もちスラ">
         </label>
 
         <label class="grid gap-2 text-sm font-black text-deep">
           生年月日
-          <input id="birth-date" class="min-h-12 rounded-lg border border-[#eadfd4] bg-white px-3 py-2 text-base font-bold text-deep" type="date" required>
+          <input id="birth-date" class="min-h-12 w-full min-w-0 rounded-lg border border-[#eadfd4] bg-white px-3 py-2 text-base font-bold text-deep" type="date" required>
         </label>
 
         <div class="grid gap-2 text-sm font-black text-deep">
@@ -117,8 +117,8 @@
         <p id="questions-error" class="hidden rounded-lg bg-red-50 px-4 py-3 text-sm font-bold text-red-700" aria-live="polite"></p>
 
         <div class="flex flex-wrap gap-3">
-          <button id="back-to-profile" class="min-h-12 rounded-lg border border-[#eadfd4] bg-white px-5 py-3 font-black text-deep transition hover:border-festival/40" type="button">戻る</button>
-          <button class="min-h-12 rounded-lg bg-deep px-5 py-3 font-black text-white transition hover:bg-slate-700" type="submit">結果カードへ</button>
+          <button id="back-to-profile" class="min-h-12 w-full rounded-lg border border-[#eadfd4] bg-white px-5 py-3 font-black text-deep transition hover:border-festival/40 sm:w-auto" type="button">戻る</button>
+          <button class="min-h-12 w-full rounded-lg bg-deep px-5 py-3 font-black text-white transition hover:bg-slate-700 sm:w-auto" type="submit">結果カードへ</button>
         </div>
       </form>
     </section>
