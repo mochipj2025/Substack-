@@ -644,16 +644,42 @@ function renderFortuneSummaries(animalCore, element, numberReading, zodiacReadin
   const weaknesses = animalCore.weakPoints?.slice(0, 3).join("、");
 
   if (fortuneStrengthSummary) {
-    fortuneStrengthSummary.textContent = `${animalCore.nameJa}の長所は、${strengths}といったところに出ます。そこに${element.ja}の「${element.title}」力、数秘${numerology}の「${numberReading.title}」、${zodiacReading.ja}の「${zodiacReading.title}」が重なるので、人や場を見ながら自分なりの形で力を出せます。${blood}型の「${bloodReading.title}」も加わり、対人面では自然な存在感が出やすいです。`;
+    renderMiniReadings(fortuneStrengthSummary, [
+      ["才能", `${animalCore.nameJa}の長所は、${strengths}といったところに出ます。${element.ja}の「${element.title}」力が重なるので、自分の持ち味を現実の場で使いやすいタイプです。`],
+      ["人間関係", `${blood}型の「${bloodReading.title}」も加わり、対人面では自然な存在感が出やすいです。人に合わせるだけでなく、場の空気を見て支え方を選べます。`],
+      ["活動", `数秘${numerology}の「${numberReading.title}」と${zodiacReading.ja}の「${zodiacReading.title}」が重なることで、やるべきことに意味を見つけた時に力が伸びます。`]
+    ]);
   }
 
   if (fortuneWeaknessSummary) {
-    fortuneWeaknessSummary.textContent = `注意点は、${weaknesses}といったところです。調子が崩れると、${animalCore.stressPattern} また、${element.ja}の力が強く出すぎると、${element.title}方向に偏って周りとの速度差が出ることがあります。短所は直すものというより、早めに気づいて扱うものです。`;
+    renderMiniReadings(fortuneWeaknessSummary, [
+      ["疲れた時", `注意点は、${weaknesses}といったところです。調子が崩れると、${animalCore.stressPattern}`],
+      ["ズレやすいところ", `${element.ja}の力が強く出すぎると、「${element.title}」方向に偏って周りとの速度差が出ることがあります。`],
+      ["扱い方", `短所は直すものというより、早めに気づいて扱うものです。違和感が出たら、${animalCore.recoveryHint}`]
+    ]);
   }
 
   if (fortuneOverallSummary) {
-    fortuneOverallSummary.textContent = `総合運は、積み重ねた個性を人との関係や日常の場で活かすほど上がります。${animalCore.nameJa}の基本性格を土台に、${element.ja}の行動傾向、数秘${numerology}の人生テーマ、${zodiacReading.ja}の感性、${blood}型の対人傾向が合わさることで、「無理に派手に変わる」より「自分の持ち味を使いやすい場所に置く」ことが開運ポイントになります。`;
+    renderMiniReadings(fortuneOverallSummary, [
+      ["開運ポイント", `総合運は、積み重ねた個性を人との関係や日常の場で活かすほど上がります。「無理に派手に変わる」より「自分の持ち味を使いやすい場所に置く」ことが開運ポイントです。`],
+      ["人間関係運", `${animalCore.nameJa}の基本性格に、${blood}型の対人傾向と${zodiacReading.ja}の感性が合わさります。安心して関われる相手が増えるほど、運の流れも整います。`],
+      ["活動・仕事運", `${element.ja}の行動傾向と数秘${numerology}の人生テーマが重なるので、役割や目的が見えた時に動きやすくなります。小さく続けるほど成果につながります。`]
+    ]);
   }
+}
+
+function renderMiniReadings(target, items) {
+  target.replaceChildren(
+    ...items.map(([label, text]) => {
+      const block = document.createElement("div");
+      block.className = "rounded-lg bg-[#fffaf4] px-4 py-3";
+      block.innerHTML = `
+        <p class="text-sm font-black text-festivalDark">${label}</p>
+        <p class="mt-1 text-sm font-bold leading-7 text-slate-700">${text}</p>
+      `;
+      return block;
+    })
+  );
 }
 
 function buildImagePrompt(animal, elementId, numerology, zodiac, blood) {
