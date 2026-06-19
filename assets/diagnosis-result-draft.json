@@ -1,0 +1,120 @@
+{
+  "animals": {
+    "wolf": {
+      "nameJa": "狼",
+      "coreTitle": "自分のリズムを守る人",
+      "summary": "人と同じであることより、自分が納得できることを大事にするタイプ。",
+      "strengths": ["独自性", "集中力", "こだわり", "一人で考える力"],
+      "weakPoints": ["干渉されること", "集団の空気に合わせすぎること"],
+      "impression": "静かに見えて、内側に強い芯がある人。",
+      "relationshipTip": "距離感を尊重されるほど、信頼が深まります。"
+    },
+    "deer": {
+      "nameJa": "こじか",
+      "coreTitle": "安心できる場所で輝く人",
+      "summary": "繊細で人なつっこく、信頼できる相手の前で魅力が出るタイプ。",
+      "strengths": ["素直さ", "愛され力", "空気を読む力", "守られる魅力"],
+      "weakPoints": ["急な変化", "冷たい態度", "安心できない環境"],
+      "impression": "放っておけないかわいげと、意外な観察力がある人。",
+      "relationshipTip": "安心感を先に作ると、本音が自然に出てきます。"
+    },
+    "monkey": {
+      "nameJa": "猿",
+      "coreTitle": "動きながら工夫する人",
+      "summary": "考え込むより、手を動かしながら答えを見つけるタイプ。",
+      "strengths": ["機転", "サービス精神", "行動力", "改善力"],
+      "weakPoints": ["退屈な作業", "反応がない場", "細かすぎる制限"],
+      "impression": "気軽に見えて、実はかなりよく見て動いている人。",
+      "relationshipTip": "反応を返すと、どんどん場を明るくしてくれます。"
+    },
+    "cheetah": {
+      "nameJa": "チータ",
+      "coreTitle": "一直線に走り出す人",
+      "summary": "目標を見つけると動きが速く、勝負どころで勢いが出るタイプ。",
+      "strengths": ["スピード", "挑戦心", "華やかさ", "切り替えの早さ"],
+      "weakPoints": ["待たされること", "遠回り", "手応えのない努力"],
+      "impression": "明るく勢いがあり、場に前向きな圧を作る人。",
+      "relationshipTip": "小さなゴールを用意すると、気持ちよく走れます。"
+    },
+    "black-panther": {
+      "nameJa": "黒ひょう",
+      "coreTitle": "美意識をまとって進む人",
+      "summary": "見せ方や空気感に敏感で、自分らしいスタイルを大切にするタイプ。",
+      "strengths": ["美意識", "スマートさ", "人前での見せ方", "センス"],
+      "weakPoints": ["雑な扱い", "古くさい空気", "評価されないこと"],
+      "impression": "自然に目を引く、どこか洗練された人。",
+      "relationshipTip": "良いところを具体的に褒めると、距離が縮まります。"
+    },
+    "lion": {
+      "nameJa": "ライオン",
+      "coreTitle": "堂々と場を支える人",
+      "summary": "責任感があり、頼られるほど力を発揮するタイプ。",
+      "strengths": ["統率力", "責任感", "面倒見", "堂々とした存在感"],
+      "weakPoints": ["軽く扱われること", "中途半端な姿勢", "プライドを傷つけられること"],
+      "impression": "頼れる親分感と、実は繊細な誇りを持つ人。",
+      "relationshipTip": "敬意を持って頼ると、想像以上に力を貸してくれます。"
+    },
+    "tiger": {
+      "nameJa": "虎",
+      "coreTitle": "全体を見て整える人",
+      "summary": "現実感があり、バランスを見ながら物事を進めるタイプ。",
+      "strengths": ["調整力", "現実感", "面倒見", "筋を通す力"],
+      "weakPoints": ["筋の通らない話", "場当たり的な判断", "無責任さ"],
+      "impression": "どっしりしていて、いざという時に頼れる人。",
+      "relationshipTip": "理由と筋道を伝えると、安心して動いてくれます。"
+    },
+    "tanuki": {
+      "nameJa": "たぬき",
+      "coreTitle": "経験を味方にする人",
+      "summary": "人当たりがよく、場に馴染みながら知恵を積み上げるタイプ。",
+      "strengths": ["親しみやすさ", "経験値", "粘り強さ", "場への馴染み方"],
+      "weakPoints": ["急かされること", "新しすぎるルール", "軽いノリだけの関係"],
+      "impression": "ほっとする雰囲気と、意外なしたたかさがある人。",
+      "relationshipTip": "昔の経験や積み重ねを尊重すると、信頼が深まります。"
+    },
+    "koala": {
+      "nameJa": "子守熊",
+      "coreTitle": "余白を愛して楽しむ人",
+      "summary": "のんびり見えて、楽しいことへの嗅覚が鋭いタイプ。",
+      "strengths": ["余裕", "遊び心", "計画性", "楽しむ力"],
+      "weakPoints": ["追い詰められること", "休めない環境", "楽しさのない義務"],
+      "impression": "ゆるく見えて、ちゃんと楽しい方向へ運ぶ人。",
+      "relationshipTip": "余白を渡すと、自然にいいアイデアが出てきます。"
+    },
+    "elephant": {
+      "nameJa": "ゾウ",
+      "coreTitle": "決めたことをやり抜く人",
+      "summary": "一度決めたことを粘り強く進め、実力で信頼を積むタイプ。",
+      "strengths": ["継続力", "実力主義", "集中力", "大きな器"],
+      "weakPoints": ["口だけの約束", "細かい横やり", "成果が見えない努力"],
+      "impression": "静かな迫力があり、簡単には折れない人。",
+      "relationshipTip": "本気度を見せると、深く力を貸してくれます。"
+    },
+    "sheep": {
+      "nameJa": "ひつじ",
+      "coreTitle": "輪の中で安心を作る人",
+      "summary": "人とのつながりを大切にし、場をやわらかくするタイプ。",
+      "strengths": ["協調性", "相談力", "調整力", "人をつなぐ力"],
+      "weakPoints": ["孤立すること", "冷たい空気", "人間関係の不安定さ"],
+      "impression": "話しかけやすく、気づけば人が集まる人。",
+      "relationshipTip": "仲間として扱われると、安心して力を出せます。"
+    },
+    "pegasus": {
+      "nameJa": "ペガサス",
+      "coreTitle": "自由なひらめきで飛ぶ人",
+      "summary": "感性が豊かで、型にはまりきらない魅力があるタイプ。",
+      "strengths": ["直感", "自由さ", "発想力", "飛躍力"],
+      "weakPoints": ["細かい管理", "同じことの繰り返し", "窮屈な空気"],
+      "impression": "読めないけれど目が離せない、不思議な魅力のある人。",
+      "relationshipTip": "自由を奪わず見守ると、突然すごい飛び方をします。"
+    }
+  },
+  "resultSections": {
+    "hero": ["animal", "element", "title", "oneLine", "image"],
+    "basic": ["summary", "strengths", "weakPoints", "impression"],
+    "analysisRoom": ["element", "numerology", "bloodType"],
+    "combinedReading": ["animalElement", "animalNumerology", "animalBlood", "totalComment"],
+    "relationship": ["easyToConnect", "conflictPattern", "relationshipTip"],
+    "dailyUse": ["todayHint", "recoveryHint", "ketsujirushiLine"]
+  }
+}

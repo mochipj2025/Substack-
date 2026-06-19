@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ケツ印どうぶつ診断</title>
+  <meta name="description" content="生年月日、血液型、五行質問でケツ印どうぶつカードを作る診断ページです。">
+  <link rel="icon" href="assets/icon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            base: "#faf8f5",
+            festival: "#e67e22",
+            festivalDark: "#bf5f0f",
+            deep: "#2c3e50",
+            ink: "#26313b"
+          },
+          fontFamily: {
+            sans: ['"Noto Sans JP"', "ui-sans-serif", "system-ui", "sans-serif"]
+          },
+          boxShadow: {
+            soft: "0 18px 50px rgba(44, 62, 80, 0.12)"
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-base font-sans text-ink antialiased">
+  <header class="bg-gradient-to-b from-[#fff3df] to-base px-4 pt-7 sm:px-6">
+    <div class="mx-auto max-w-3xl">
+      <nav class="flex flex-wrap items-center justify-between gap-3">
+        <a href="animals.html" class="inline-flex items-center gap-2 rounded-full border border-festival/25 bg-white/90 px-3 py-2 text-sm font-black text-deep shadow-sm">
+          <img src="assets/icon.png" alt="" class="h-6 w-6 rounded-full object-cover">
+          素材帳へ戻る
+        </a>
+        <span class="rounded-full bg-deep px-3 py-2 text-sm font-bold text-white">診断準備中</span>
+      </nav>
+
+      <section class="mt-6 rounded-lg border border-festival/20 bg-white/90 p-5 shadow-soft sm:mt-8 sm:p-8">
+        <p class="text-sm font-black uppercase text-festivalDark">Ketsujirushi Animal Reading</p>
+        <h1 class="mt-2 text-3xl font-black leading-tight text-deep sm:text-5xl">ケツ印どうぶつ診断</h1>
+        <p class="mt-4 leading-8 text-slate-600">最初に生年月日と血液型を入れてください。そのあと、五行タイプを出す質問ページに進みます。</p>
+      </section>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-3xl px-4 py-8 sm:px-6">
+    <section id="step-profile" class="rounded-lg border border-[#eadfd4] bg-white/95 p-5 shadow-soft sm:p-8" aria-labelledby="profile-title">
+      <p class="text-sm font-black uppercase text-festivalDark">Step 1</p>
+      <h2 id="profile-title" class="mt-2 text-3xl font-black leading-tight text-deep">生年月日と血液型</h2>
+
+      <form id="profile-form" class="mt-6 grid gap-5">
+        <label class="grid gap-2 text-sm font-black text-deep">
+          お名前
+          <input id="user-name" class="min-h-12 rounded-lg border border-[#eadfd4] bg-white px-3 py-2 text-base font-bold text-deep" type="text" autocomplete="name" placeholder="もちスラ">
+        </label>
+
+        <label class="grid gap-2 text-sm font-black text-deep">
+          生年月日
+          <input id="birth-date" class="min-h-12 rounded-lg border border-[#eadfd4] bg-white px-3 py-2 text-base font-bold text-deep" type="date" required>
+        </label>
+
+        <div class="grid gap-2 text-sm font-black text-deep">
+          動物タイプ
+          <div class="rounded-lg border border-[#eadfd4] bg-[#fffaf4] px-4 py-3">
+            <p id="calculated-animal" class="text-lg font-black text-deep">生年月日を入れると自動で出ます</p>
+            <p id="calculated-animal-detail" class="mt-1 text-xs font-bold leading-6 text-slate-500">60分類番号をもとに12動物へ変換します。</p>
+          </div>
+        </div>
+
+        <fieldset class="grid gap-3">
+          <legend class="text-sm font-black text-deep">血液型</legend>
+          <div class="grid grid-cols-2 gap-3 sm:grid-cols-5">
+            <label class="blood-option rounded-lg border border-[#eadfd4] bg-white px-4 py-3 text-center font-black text-deep">
+              <input class="sr-only" type="radio" name="blood-type" value="A" required>
+              A
+            </label>
+            <label class="blood-option rounded-lg border border-[#eadfd4] bg-white px-4 py-3 text-center font-black text-deep">
+              <input class="sr-only" type="radio" name="blood-type" value="B">
+              B
+            </label>
+            <label class="blood-option rounded-lg border border-[#eadfd4] bg-white px-4 py-3 text-center font-black text-deep">
+              <input class="sr-only" type="radio" name="blood-type" value="O">
+              O
+            </label>
+            <label class="blood-option rounded-lg border border-[#eadfd4] bg-white px-4 py-3 text-center font-black text-deep">
+              <input class="sr-only" type="radio" name="blood-type" value="AB">
+              AB
+            </label>
+            <label class="blood-option rounded-lg border border-[#eadfd4] bg-white px-4 py-3 text-center font-black text-deep">
+              <input class="sr-only" type="radio" name="blood-type" value="不明">
+              不明
+            </label>
+          </div>
+        </fieldset>
+
+        <p id="profile-error" class="hidden rounded-lg bg-red-50 px-4 py-3 text-sm font-bold text-red-700" aria-live="polite"></p>
+
+        <button class="min-h-14 rounded-lg bg-festival px-6 py-4 text-lg font-black text-white shadow-sm transition hover:bg-festivalDark" type="submit">質問ページへ進む</button>
+      </form>
+    </section>
+
+    <section id="step-questions" class="hidden rounded-lg border border-[#eadfd4] bg-white/95 p-5 shadow-soft sm:p-8" aria-labelledby="questions-title">
+      <p class="text-sm font-black uppercase text-festivalDark">Step 2</p>
+      <h2 id="questions-title" class="mt-2 text-3xl font-black leading-tight text-deep">五行質問</h2>
+      <p id="profile-summary" class="mt-4 rounded-lg bg-[#fff4e8] px-4 py-3 text-sm font-bold leading-7 text-deep"></p>
+
+      <form id="questions-form" class="mt-6 grid gap-5">
+        <div id="five-elements-questions" class="grid gap-5"></div>
+        <p id="questions-error" class="hidden rounded-lg bg-red-50 px-4 py-3 text-sm font-bold text-red-700" aria-live="polite"></p>
+
+        <div class="flex flex-wrap gap-3">
+          <button id="back-to-profile" class="min-h-12 rounded-lg border border-[#eadfd4] bg-white px-5 py-3 font-black text-deep transition hover:border-festival/40" type="button">戻る</button>
+          <button class="min-h-12 rounded-lg bg-deep px-5 py-3 font-black text-white transition hover:bg-slate-700" type="submit">結果カードへ</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script src="diagnosis.js?v=20260619-1" defer></script>
+</body>
+</html>

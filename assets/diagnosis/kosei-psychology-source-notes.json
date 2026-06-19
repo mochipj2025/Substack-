@@ -1,0 +1,178 @@
+{
+  "meta": {
+    "name": "個性心理學 ソースメモ",
+    "version": "0.1.0",
+    "purpose": "ケツ印どうぶつ診断の結果ページを本格化するため、個性心理學研究所の公開情報を要点化して保管する。",
+    "copyrightPolicy": "公式サイト本文は転載しない。ここでは短い要点、構造、再構成方針、出典URLだけを保存する。",
+    "checkedAt": "2026-06-18",
+    "sources": [
+      {
+        "title": "個性心理學研究所 公式トップ",
+        "url": "https://www.noa-group.co.jp/",
+        "notes": [
+          "個性心理學は、人間の個性を12匹の動物キャラクターに当てはめ、さらに60分類へ細分化した体系として紹介されている。",
+          "生年月日から動物キャラを調べるフォームがある。",
+          "ビジネス、人間関係、子育てなどのコミュニケーションツールとして導入事例が紹介されている。",
+          "サイト掲載物の無断転載禁止が明記されているため、公開結果文は独自作成にする。"
+        ]
+      },
+      {
+        "title": "個性心理學研究所 | 個性心理學とは",
+        "url": "https://www.noa-group.co.jp/koseisinri/",
+        "notes": [
+          "1997年4月に個性心理學研究所の弦本將裕氏が体系化したものとして説明されている。",
+          "四柱推命、宿曜経、社会心理学的解釈、キャラクターイメージを組み合わせた実学として説明されている。",
+          "12分類に動物キャラクターを当てはめ、さらに60キャラクターへ発展させた構成が示されている。",
+          "MOON、EARTH、SUNの3分類が示され、12動物がグループ分けされている。",
+          "心理ベクトル、行動パターン、思考パターンの説明がある。",
+          "個性心理學、動物キャラナビ等の商標登録一覧が掲載されている。"
+        ]
+      }
+    ]
+  },
+  "systemOverview": {
+    "origin": {
+      "year": 1997,
+      "founder": "弦本將裕",
+      "organization": "個性心理學研究所",
+      "summaryForOurUse": "生年月日をもとに、12動物と60キャラクターで個性をイメージしやすく整理する体系として扱う。"
+    },
+    "classification": {
+      "animalCount": 12,
+      "detailedCharacterCount": 60,
+      "ourInitialScope": "まず12動物を使う。60分類は将来拡張として倉庫だけ先に受けられる構造にする。"
+    },
+    "legalAndNamingNotes": [
+      "個性心理學、動物キャラナビ等は商標登録情報が公式ページに掲載されている。",
+      "公開サイト名やボタン名に商標名を前面使用する場合は注意する。",
+      "ケツ印サイトでは『既存の12動物タイプを参考にしたオリジナル診断』として扱うのが安全。"
+    ]
+  },
+  "threeGroups": {
+    "moon": {
+      "label": "MOON",
+      "nickname": "いい人チーム",
+      "animals": ["black-panther", "sheep", "deer", "tanuki"],
+      "subgroups": {
+        "fullMoon": ["black-panther", "sheep"],
+        "newMoon": ["deer", "tanuki"]
+      },
+      "sourceTraitsMemo": [
+        "人との和や情を重視する傾向",
+        "相手からの評価や相手の意見を気にしやすい",
+        "結論に至るまでの流れを大事にし、話が丁寧になりやすい",
+        "世のため、人のためという方向に力が向きやすい"
+      ],
+      "ketsujirushiRewriteDirection": "人間関係の温度、安心感、相手軸、情の深さとして表現する。"
+    },
+    "earth": {
+      "label": "EARTH",
+      "nickname": "しっかり者チーム",
+      "animals": ["wolf", "monkey", "tiger", "koala"],
+      "sourceTraitsMemo": [
+        "自分のペースや自立を重視する傾向",
+        "結果、数字、形あるものを大切にしやすい",
+        "納得感がないと動きにくい",
+        "現実的、効率的、生産性を意識しやすい",
+        "予定やペースを乱されることを嫌いやすい"
+      ],
+      "ketsujirushiRewriteDirection": "自分軸、実務感覚、納得して動く力、現実を整える力として表現する。"
+    },
+    "sun": {
+      "label": "SUN",
+      "nickname": "天才チーム",
+      "animals": ["cheetah", "lion", "elephant", "pegasus"],
+      "sourceTraitsMemo": [
+        "自由さや大きな展開を重視する傾向",
+        "権威、組織、成功、スケール感に意識が向きやすい",
+        "気分や願望を大事にしやすい",
+        "束縛を嫌い、感性で動きやすい",
+        "細かい話や長い理屈は苦手になりやすい"
+      ],
+      "ketsujirushiRewriteDirection": "自由、スケール感、気分の熱量、場を動かす力として表現する。"
+    }
+  },
+  "additionalAxes": {
+    "psychologicalVector": {
+      "futureOriented": {
+        "sourceTraitsMemo": [
+          "前向きでプラス思考",
+          "考えながら素早く行動しやすい",
+          "慎重さが不足しやすい"
+        ],
+        "rewriteDirection": "未来へ進む速度、軽装で動く前向きさとして表現する。"
+      },
+      "pastReflective": {
+        "sourceTraitsMemo": [
+          "経験や過去の実績を重視する",
+          "慎重に考えて決断する",
+          "もしもの場合を想定しやすい"
+        ],
+        "rewriteDirection": "経験値、準備力、慎重な判断として表現する。"
+      }
+    },
+    "actionPattern": {
+      "goalOriented": {
+        "sourceTraitsMemo": [
+          "先に目標を決め、計画を立てて行動する",
+          "仕事とプライベートを分けやすい",
+          "予定外の出来事に弱くなりやすい"
+        ],
+        "rewriteDirection": "ゴール設定、計画性、予定変更への弱さとして使う。"
+      },
+      "situationResponsive": {
+        "sourceTraitsMemo": [
+          "大きな方向性を決めて臨機応変に動く",
+          "期限を厳しく決められるとプレッシャーになりやすい",
+          "関係は建前から入り、徐々に開いていく"
+        ],
+        "rewriteDirection": "柔軟性、場に合わせる力、締切プレッシャーとして使う。"
+      }
+    },
+    "thinkingPattern": {
+      "rightBrain": {
+        "sourceTraitsMemo": [
+          "イメージや直感で受け止める",
+          "相手の心や未来の流れを読む方向に強みが出やすい"
+        ],
+        "rewriteDirection": "直感、感性、空気を読む力として表現する。"
+      },
+      "leftBrain": {
+        "sourceTraitsMemo": [
+          "現実的、理論的に判断する",
+          "データや理由があると納得しやすい",
+          "経済的エネルギーが強いとされる"
+        ],
+        "rewriteDirection": "論理、根拠、現実感、数字への強さとして表現する。"
+      }
+    }
+  },
+  "animalGroupOverlay": {
+    "wolf": { "group": "earth", "overlayUse": "自分軸と納得感を強める。" },
+    "monkey": { "group": "earth", "overlayUse": "実務感覚と改善力を強める。" },
+    "tiger": { "group": "earth", "overlayUse": "現実感と筋道を強める。" },
+    "koala": { "group": "earth", "overlayUse": "自分のペースと効率よく休む力を強める。" },
+    "black-panther": { "group": "moon", "overlayUse": "相手からの見え方、情、影響力への意識を強める。" },
+    "sheep": { "group": "moon", "overlayUse": "つながり、和、相手軸を強める。" },
+    "deer": { "group": "moon", "overlayUse": "安心感、信頼、相手の反応への繊細さを強める。" },
+    "tanuki": { "group": "moon", "overlayUse": "情、人間味、出番を待つ感じを強める。" },
+    "cheetah": { "group": "sun", "overlayUse": "スピード、成功欲、大きな展開を強める。" },
+    "lion": { "group": "sun", "overlayUse": "権威、責任、場を動かすスケール感を強める。" },
+    "elephant": { "group": "sun", "overlayUse": "大きな目標、成功、存在感を強める。" },
+    "pegasus": { "group": "sun", "overlayUse": "自由、感性、予測不能な飛躍を強める。" }
+  },
+  "integrationPlan": {
+    "resultPageUse": [
+      "基本診断倉庫のanimalCoreを土台にする。",
+      "このファイルのthreeGroupsでMOON/EARTH/SUNの文脈を重ねる。",
+      "五行は質問紙から出た現在の行動傾向として重ねる。",
+      "数秘は人生テーマとして重ねる。",
+      "血液型は対人のクセとして軽く重ねる。"
+    ],
+    "futureExpansion": [
+      "生年月日から12動物を出すロジックを別途確定する。",
+      "60分類を扱う場合は、商標・利用許諾・計算表の扱いを確認する。",
+      "個性心理學の公式テキスト本文は引用せず、要点から独自文を生成する。"
+    ]
+  }
+}

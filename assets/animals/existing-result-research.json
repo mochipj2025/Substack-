@@ -1,0 +1,26 @@
+{
+  "policy": {
+    "purpose": "既存の動物占い結果を調査して、ケツ印一家向けのオリジナル結果文を作るための参照メモ。",
+    "copyrightNote": "既存サイトや書籍の診断本文は転載しない。短い要点メモ、出典URL、ケツ印用の再構成方針だけを保存する。",
+    "workflow": [
+      "出典を確認する",
+      "動物ごとの共通傾向を短い要点で記録する",
+      "五行・数秘術・血液型と矛盾しないように再構成する",
+      "公開ページにはケツ印オリジナル文だけを出す"
+    ]
+  },
+  "animals": {
+    "wolf": { "sourceNotes": [], "commonTraits": [], "rewriteDirection": "" },
+    "deer": { "sourceNotes": [], "commonTraits": [], "rewriteDirection": "" },
+    "monkey": { "sourceNotes": [], "commonTraits": [], "rewriteDirection": "" },
+    "cheetah": { "sourceNotes": [], "commonTraits": [], "rewriteDirection": "" },
+    "black-panther": { "sourceNotes": [], "commonTraits": [], "rewriteDirection": "" },
+    "lion": { "sourceNotes": [], "commonTraits": [], "rewriteDirection": "" },
+    "tiger": { "sourceNotes": [], "commonTraits": [], "rewriteDirection": "" },
+    "tanuki": { "sourceNotes": [], "commonTraits": [], "rewriteDirection": "" },
+    "koala": { "sourceNotes": [], "commonTraits": [], "rewriteDirection": "" },
+    "elephant": { "sourceNotes": [], "commonTraits": [], "rewriteDirection": "" },
+    "sheep": { "sourceNotes": [], "commonTraits": [], "rewriteDirection": "" },
+    "pegasus": { "sourceNotes": [], "commonTraits": [], "rewriteDirection": "" }
+  }
+}

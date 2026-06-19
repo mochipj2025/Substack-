@@ -1,0 +1,86 @@
+[
+  {
+    "id": "wolf",
+    "nameJa": "狼",
+    "image": "assets/animals/wolf.png",
+    "sprite48": "assets/animals/48x48/wolf.png",
+    "idleSheet": "assets/animals/idle/wolf-idle-4f.png"
+  },
+  {
+    "id": "deer",
+    "nameJa": "こじか",
+    "image": "assets/animals/deer.png",
+    "sprite48": "assets/animals/48x48/deer.png",
+    "idleSheet": "assets/animals/idle/deer-idle-4f.png"
+  },
+  {
+    "id": "monkey",
+    "nameJa": "猿",
+    "image": "assets/animals/monkey.png",
+    "sprite48": "assets/animals/48x48/monkey.png",
+    "idleSheet": "assets/animals/idle/monkey-idle-4f.png"
+  },
+  {
+    "id": "cheetah",
+    "nameJa": "チータ",
+    "image": "assets/animals/cheetah.png",
+    "sprite48": "assets/animals/48x48/cheetah.png",
+    "idleSheet": "assets/animals/idle/cheetah-idle-4f.png"
+  },
+  {
+    "id": "black-panther",
+    "nameJa": "黒ひょう",
+    "image": "assets/animals/black-panther.png",
+    "sprite48": "assets/animals/48x48/black-panther.png",
+    "idleSheet": "assets/animals/idle/black-panther-idle-4f.png"
+  },
+  {
+    "id": "lion",
+    "nameJa": "ライオン",
+    "image": "assets/animals/lion.png",
+    "sprite48": "assets/animals/48x48/lion.png",
+    "idleSheet": "assets/animals/idle/lion-idle-4f.png"
+  },
+  {
+    "id": "tiger",
+    "nameJa": "虎",
+    "image": "assets/animals/tiger.png",
+    "sprite48": "assets/animals/48x48/tiger.png",
+    "idleSheet": "assets/animals/idle/tiger-idle-4f.png"
+  },
+  {
+    "id": "tanuki",
+    "nameJa": "たぬき",
+    "image": "assets/animals/tanuki.png",
+    "sprite48": "assets/animals/48x48/tanuki.png",
+    "idleSheet": "assets/animals/idle/tanuki-idle-4f.png"
+  },
+  {
+    "id": "koala",
+    "nameJa": "子守熊",
+    "image": "assets/animals/koala.png",
+    "sprite48": "assets/animals/48x48/koala.png",
+    "idleSheet": "assets/animals/idle/koala-idle-4f.png"
+  },
+  {
+    "id": "elephant",
+    "nameJa": "ゾウ",
+    "image": "assets/animals/elephant.png",
+    "sprite48": "assets/animals/48x48/elephant.png",
+    "idleSheet": "assets/animals/idle/elephant-idle-4f.png"
+  },
+  {
+    "id": "sheep",
+    "nameJa": "ひつじ",
+    "image": "assets/animals/sheep.png",
+    "sprite48": "assets/animals/48x48/sheep.png",
+    "idleSheet": "assets/animals/idle/sheep-idle-4f.png"
+  },
+  {
+    "id": "pegasus",
+    "nameJa": "ペガサス",
+    "image": "assets/animals/pegasus.png",
+    "sprite48": "assets/animals/48x48/pegasus.png",
+    "idleSheet": "assets/animals/idle/pegasus-idle-4f.png"
+  }
+]
