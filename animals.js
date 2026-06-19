@@ -492,7 +492,7 @@ function renderResultSummary(animal, elementId, numerology, zodiac, blood) {
 
   if (resultSummaryBody) {
     const animalPhrase = animalCore?.oneLine || `${animal.nameJa}タイプの持ち味`;
-    resultSummaryBody.textContent = `${animalPhrase} そこに、${element.ja}の「${element.title}」力、数秘${numerology}の「${numberReading.title}」、${zodiacReading.ja}の感性が重なっています。`;
+    resultSummaryBody.textContent = `${animalPhrase} ${buildFiveElementScoreSentence(elementId)}そこに、数秘${numerology}の「${numberReading.title}」、${zodiacReading.ja}の感性、${blood}型の対人傾向が重なっています。`;
   }
 
   if (resultSummaryChips) {
@@ -522,6 +522,25 @@ function renderResultSummary(animal, elementId, numerology, zodiac, blood) {
 function buildResultSummaryTitle(animal, element, animalCore) {
   const animalTitle = animalCore?.resultTitle || `${animal.nameJa}タイプ`;
   return `${element.title}、${animalTitle}`;
+}
+
+function buildFiveElementScoreSentence(primaryElementId) {
+  const primaryElement = elements[primaryElementId] || elements.wood;
+  const scores = getFiveElementScores();
+
+  if (!scores) {
+    return `${primaryElement.ja}の「${primaryElement.title}」力が出ています。`;
+  }
+
+  const sortedScores = getSortedElementScores(scores);
+  const primaryScore = scores[primaryElementId] || sortedScores[0]?.score || 0;
+  const subElement = sortedScores.find((item) => item.id !== primaryElementId && item.score > 0);
+
+  if (!subElement) {
+    return `五行では${primaryElement.ja}が${primaryScore}点で一番強く、${primaryElement.summary}`;
+  }
+
+  return `五行では${primaryElement.ja}が${primaryScore}点で一番強く、サブに${subElement.element.ja}${subElement.score}点が出ています。${primaryElement.summary} さらに${subElement.element.ja}の「${subElement.element.title}」力も少し混ざります。`;
 }
 
 function renderFiveElementScores(primaryElementId) {
