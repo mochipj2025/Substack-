@@ -64,6 +64,10 @@ const fortuneWeaknessSummary = document.querySelector("#fortune-weakness-summary
 const fortuneOverallSummary = document.querySelector("#fortune-overall-summary");
 const deepRecoveryHint = document.querySelector("#deep-recovery-hint");
 const deepKetsujirushiLine = document.querySelector("#deep-ketsujirushi-line");
+const imagePromptEyebrow = document.querySelector("#image-prompt-eyebrow");
+const imagePromptTitle = document.querySelector("#image-prompt-title");
+const imagePromptDescription = document.querySelector("#image-prompt-description");
+const imagePromptModeButtons = document.querySelectorAll("[data-prompt-mode]");
 const imagePromptOutput = document.querySelector("#image-prompt-output");
 const copyImagePromptButton = document.querySelector("#copy-image-prompt");
 const imagePromptCopyStatus = document.querySelector("#image-prompt-copy-status");
@@ -72,6 +76,7 @@ let animals = [];
 let diagnosisWarehouse = null;
 let viewMode = "card";
 let selectedAnimalId = "lion";
+let imagePromptMode = "card";
 const resultStockKey = "ketsujirushiDiagnosisResults";
 const resultModeParams = new URLSearchParams(window.location.search);
 const isPersonalResultMode = resultModeParams.has("animal")
@@ -683,6 +688,14 @@ function renderMiniReadings(target, items) {
 }
 
 function buildImagePrompt(animal, elementId, numerology, zodiac, blood) {
+  if (imagePromptMode === "icon") {
+    return buildIconImagePrompt(animal, elementId, numerology, zodiac, blood);
+  }
+
+  return buildResultCardImagePrompt(animal, elementId, numerology, zodiac, blood);
+}
+
+function buildResultCardImagePrompt(animal, elementId, numerology, zodiac, blood) {
   const animalCore = diagnosisWarehouse?.animalCore?.[animal.id];
   const element = elements[elementId] || elements.wood;
   const numberReading = numerologyReadings[numerology] || numerologyReadings[3];
@@ -715,8 +728,60 @@ function buildImagePrompt(animal, elementId, numerology, zodiac, blood) {
   ].join("\n");
 }
 
+function buildIconImagePrompt(animal, elementId, numerology, zodiac, blood) {
+  const animalCore = diagnosisWarehouse?.animalCore?.[animal.id];
+  const element = elements[elementId] || elements.wood;
+  const zodiacReading = zodiacReadings[zodiac] || zodiacReadings.capricorn;
+  const bloodReading = bloodReadings[blood] || bloodReadings["不明"];
+  const keywords = animalCore?.keywords?.slice(0, 3).join(", ") || "friendly, symbolic, personal";
+
+  return [
+    "Create a square 1:1 SNS profile icon illustration for Image 2.0. Canvas ratio 1:1, recommended size 1024x1024.",
+    "",
+    `Main character: a cute original pixel art ${animal.nameJa} pet mascot, large centered face and upper body, charming and memorable.`,
+    `Icon identity: ${element.ja} element, numerology ${numerology}, ${zodiacReading.ja}, ${blood} type mood.`,
+    `Personality mood: ${animalCore?.resultTitle || animal.nameJa} / ${keywords}.`,
+    `Five elements theme: ${element.en} / ${element.ja}, ${element.summary}`,
+    `Blood type nuance: ${bloodReading.title}.`,
+    "",
+    "Visual style: premium 32-bit pixel art icon, clean silhouette, expressive eyes, crisp sprite-like edges, polished app icon quality.",
+    "Composition: centered mascot, face clearly visible at small size, soft circular elemental background, tiny five-elements charm mark, no crowded layout.",
+    "Text rules: no text, no letters, no numbers, no badge labels. Use only visual symbols so the icon stays readable.",
+    "Background: soft round backdrop using the five-elements accent color, warm off-white outer margin, subtle festival charm details.",
+    "Quality: high detail pixel illustration, friendly, not realistic, not scary, no watermark, no logo, no extra limbs, no distorted face.",
+    "Output: one finished square SNS icon image, 1:1 aspect ratio, optimized for profile pictures and chat avatars."
+  ].join("\n");
+}
+
+function updateImagePromptModeUi() {
+  const isIconMode = imagePromptMode === "icon";
+
+  if (imagePromptEyebrow) {
+    imagePromptEyebrow.textContent = isIconMode ? "Image 2.0 Prompt / SNS Icon" : "Image 2.0 Prompt / Result Card";
+  }
+
+  if (imagePromptTitle) {
+    imagePromptTitle.textContent = isIconMode ? "SNSアイコン用Prompt" : "結果カード用Prompt";
+  }
+
+  if (imagePromptDescription) {
+    imagePromptDescription.textContent = isIconMode
+      ? "1:1正方形のプロフィール画像を作るためのPromptです。顔が小さくならない、SNSで見やすいアイコンにします。"
+      : "4:5縦長の診断結果カードを作るためのPromptです。スマホで共有しやすい1枚絵にします。";
+  }
+
+  imagePromptModeButtons.forEach((button) => {
+    const isActive = button.dataset.promptMode === imagePromptMode;
+    button.setAttribute("aria-pressed", String(isActive));
+    button.className = isActive
+      ? "rounded-full bg-deep px-4 py-2 text-sm font-black text-white"
+      : "rounded-full border border-[#eadfd4] bg-white px-4 py-2 text-sm font-black text-deep transition hover:border-festival/40";
+  });
+}
+
 function renderImagePrompt(animal, elementId, numerology, zodiac, blood) {
   if (!imagePromptOutput) return;
+  updateImagePromptModeUi();
   imagePromptOutput.value = buildImagePrompt(animal, elementId, numerology, zodiac, blood);
   if (imagePromptCopyStatus) {
     imagePromptCopyStatus.classList.add("hidden");
@@ -937,6 +1002,13 @@ cardAnimalSelect?.addEventListener("change", () => {
 cardElementSelect?.addEventListener("change", renderFortuneCard);
 cardNumerologySelect?.addEventListener("change", renderFortuneCard);
 cardBloodSelect?.addEventListener("change", renderFortuneCard);
+
+imagePromptModeButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    imagePromptMode = button.dataset.promptMode || "card";
+    renderFortuneCard();
+  });
+});
 
 clearResultStockButton?.addEventListener("click", () => {
   localStorage.removeItem(resultStockKey);
