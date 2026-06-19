@@ -31,6 +31,23 @@
       }
     };
   </script>
+  <style>
+    input,
+    select,
+    textarea {
+      box-sizing: border-box;
+      max-width: 100%;
+    }
+
+    #birth-date {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+  </style>
 </head>
 <body class="bg-base font-sans text-ink antialiased">
   <header class="bg-gradient-to-b from-[#fff3df] to-base px-4 pt-7 sm:px-6">
@@ -52,17 +69,17 @@
   </header>
 
   <main class="mx-auto max-w-3xl px-4 py-8 sm:px-6">
-    <section id="step-profile" class="rounded-lg border border-[#eadfd4] bg-white/95 p-5 shadow-soft sm:p-8" aria-labelledby="profile-title">
+    <section id="step-profile" class="min-w-0 overflow-hidden rounded-lg border border-[#eadfd4] bg-white/95 p-5 shadow-soft sm:p-8" aria-labelledby="profile-title">
       <p class="text-sm font-black uppercase text-festivalDark">Step 1</p>
       <h2 id="profile-title" class="mt-2 text-3xl font-black leading-tight text-deep">生年月日と血液型</h2>
 
-      <form id="profile-form" class="mt-6 grid gap-5">
-        <label class="grid gap-2 text-sm font-black text-deep">
+      <form id="profile-form" class="mt-6 grid min-w-0 gap-5">
+        <label class="grid min-w-0 gap-2 text-sm font-black text-deep">
           お名前
           <input id="user-name" class="min-h-12 w-full min-w-0 rounded-lg border border-[#eadfd4] bg-white px-3 py-2 text-base font-bold text-deep" type="text" autocomplete="name" placeholder="もちスラ">
         </label>
 
-        <label class="grid gap-2 text-sm font-black text-deep">
+        <label class="grid min-w-0 gap-2 text-sm font-black text-deep">
           生年月日
           <input id="birth-date" class="min-h-12 w-full min-w-0 rounded-lg border border-[#eadfd4] bg-white px-3 py-2 text-base font-bold text-deep" type="date" required>
         </label>
