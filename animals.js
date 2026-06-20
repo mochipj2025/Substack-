@@ -26,6 +26,8 @@ const fiveElementScorePanel = document.querySelector("#five-element-score-panel"
 const fiveElementSubtype = document.querySelector("#five-element-subtype");
 const fiveElementScoreBars = document.querySelector("#five-element-score-bars");
 const savePdfButton = document.querySelector("#save-pdf-button");
+const savePdfStatus = document.querySelector("#save-pdf-status");
+const resultPdfSection = document.querySelector("#result-pdf-section");
 const analysisAnimalBadge = document.querySelector("#analysis-animal-badge");
 const analysisAnimalTitle = document.querySelector("#analysis-animal-title");
 const analysisAnimalBody = document.querySelector("#analysis-animal-body");
@@ -842,6 +844,69 @@ async function copyImagePrompt() {
   }
 }
 
+function setPdfStatus(message, isError = false) {
+  if (!savePdfStatus) return;
+  savePdfStatus.textContent = message;
+  savePdfStatus.classList.remove("hidden");
+  savePdfStatus.className = isError
+    ? "no-print mt-3 rounded-lg bg-red-50 px-4 py-3 text-sm font-black leading-7 text-red-700"
+    : "no-print mt-3 rounded-lg bg-[#fff4e8] px-4 py-3 text-sm font-black leading-7 text-deep";
+}
+
+async function saveResultPdf() {
+  if (!savePdfButton || !resultPdfSection) return;
+
+  if (!window.html2pdf) {
+    setPdfStatus("PDF保存の準備がまだ完了していません。少し待ってからもう一度押してください。", true);
+    return;
+  }
+
+  const resultName = resultSummaryTitle?.textContent?.trim() || "診断結果";
+  const safeFileName = resultName.replace(/[\\/:*?"<>|]/g, "").replace(/\s+/g, "-") || "ketsujirushi-result";
+
+  savePdfButton.disabled = true;
+  savePdfButton.textContent = "PDF作成中";
+  setPdfStatus("PDFを作成しています。保存が始まるまで少し待ってください。");
+
+  try {
+    await window.html2pdf()
+      .set({
+        margin: [10, 10, 10, 10],
+        filename: `${safeFileName}.pdf`,
+        image: { type: "jpeg", quality: 0.96 },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: "#ffffff",
+          onclone: (clonedDocument) => {
+            clonedDocument.querySelectorAll(".fortune-card").forEach((card) => {
+              card.style.background = "#fff6d8";
+            });
+            clonedDocument.querySelectorAll(".element-sigil").forEach((sigil) => {
+              sigil.style.boxShadow = "none";
+            });
+          }
+        },
+        jsPDF: {
+          unit: "mm",
+          format: "a4",
+          orientation: "portrait"
+        },
+        pagebreak: { mode: ["avoid-all", "css", "legacy"] }
+      })
+      .from(resultPdfSection)
+      .save();
+
+    setPdfStatus("PDFを保存しました。ダウンロードフォルダを確認してください。");
+  } catch (error) {
+    console.error(error);
+    setPdfStatus("PDF保存に失敗しました。ページを再読み込みしてもう一度試してください。", true);
+  } finally {
+    savePdfButton.disabled = false;
+    savePdfButton.textContent = "PDF保存";
+  }
+}
+
 function renderAnalysis(animal, elementId, numerology, zodiac, blood) {
   const animalCore = diagnosisWarehouse?.animalCore?.[animal.id];
   const element = elements[elementId];
@@ -1019,6 +1084,6 @@ clearResultStockButton?.addEventListener("click", () => {
   renderStoredResults();
 });
 copyImagePromptButton?.addEventListener("click", copyImagePrompt);
-savePdfButton?.addEventListener("click", () => window.print());
+savePdfButton?.addEventListener("click", saveResultPdf);
 
 loadAnimals();
