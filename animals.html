@@ -120,6 +120,173 @@
         radial-gradient(circle at 85% 12%, rgba(230, 126, 34, 0.18), transparent 30%);
     }
 
+    .pdf-report {
+      background: #fffaf4;
+      color: #26313b;
+      font-family: "Noto Sans JP", sans-serif;
+      left: -10000px;
+      line-height: 1.75;
+      padding: 0;
+      position: fixed;
+      top: 0;
+      width: 794px;
+    }
+
+    .pdf-page {
+      background: #fffaf4;
+      border: 1px solid #eadfd4;
+      min-height: 1123px;
+      padding: 38px;
+    }
+
+    .pdf-report h1,
+    .pdf-report h2,
+    .pdf-report h3,
+    .pdf-report p {
+      margin: 0;
+    }
+
+    .pdf-kicker {
+      color: #bf5f0f;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .pdf-title {
+      color: #2c3e50;
+      font-size: 30px;
+      font-weight: 900;
+      line-height: 1.35;
+      margin-top: 8px;
+    }
+
+    .pdf-lead {
+      color: #596675;
+      font-size: 13px;
+      font-weight: 700;
+      margin-top: 12px;
+    }
+
+    .pdf-hero {
+      align-items: center;
+      background: #ffffff;
+      border: 1px solid #eadfd4;
+      border-radius: 12px;
+      display: grid;
+      gap: 22px;
+      grid-template-columns: 190px minmax(0, 1fr);
+      margin-top: 24px;
+      padding: 22px;
+    }
+
+    .pdf-hero img {
+      height: 170px;
+      image-rendering: pixelated;
+      object-fit: contain;
+      width: 170px;
+    }
+
+    .pdf-chip-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .pdf-chip {
+      background: #fff4e8;
+      border-radius: 999px;
+      color: #2c3e50;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 6px 10px;
+    }
+
+    .pdf-section {
+      background: #ffffff;
+      border: 1px solid #eadfd4;
+      border-radius: 12px;
+      margin-top: 16px;
+      padding: 18px;
+    }
+
+    .pdf-section-title {
+      color: #2c3e50;
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .pdf-body {
+      color: #3d4752;
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 8px;
+    }
+
+    .pdf-score-row {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .pdf-score-head {
+      display: flex;
+      font-size: 11px;
+      font-weight: 900;
+      justify-content: space-between;
+    }
+
+    .pdf-score-track {
+      background: #fff4e8;
+      border-radius: 999px;
+      height: 8px;
+      overflow: hidden;
+    }
+
+    .pdf-score-fill {
+      background: #e67e22;
+      border-radius: 999px;
+      height: 100%;
+    }
+
+    .pdf-pillar-grid,
+    .pdf-fortune-grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 12px;
+    }
+
+    .pdf-mini-card {
+      background: #fffaf4;
+      border: 1px solid #eadfd4;
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .pdf-mini-card h3 {
+      color: #2c3e50;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .pdf-mini-card p {
+      color: #4d5965;
+      font-size: 11px;
+      font-weight: 700;
+      margin-top: 5px;
+    }
+
+    .pdf-footer-note {
+      color: #7c8792;
+      font-size: 10px;
+      font-weight: 700;
+      margin-top: 18px;
+      text-align: right;
+    }
+
     @media print {
       @page {
         margin: 12mm;
@@ -497,6 +664,42 @@
       <p class="mt-4 rounded-lg bg-[#fff4e8] px-4 py-3 text-sm font-bold leading-7 text-deep">カードをクリックすると、Pet用のidle 4コマ表示に切り替わります。</p>
       <div id="animal-grid" class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" aria-live="polite"></div>
     </section>
+
+    <section id="pdf-report-section" class="pdf-report no-print" aria-hidden="true">
+      <div class="pdf-page">
+        <p class="pdf-kicker">Ketsujirushi Animal Fortune Report</p>
+        <h1 id="pdf-report-title" class="pdf-title">ケツ印どうぶつ診断 結果レポート</h1>
+        <p id="pdf-report-lead" class="pdf-lead"></p>
+
+        <div class="pdf-hero">
+          <img id="pdf-report-image" src="assets/animals/tanuki.png" alt="">
+          <div>
+            <p class="pdf-kicker">Result Summary</p>
+            <h2 id="pdf-report-main-title" class="pdf-section-title"></h2>
+            <p id="pdf-report-summary" class="pdf-body"></p>
+            <div id="pdf-report-chips" class="pdf-chip-list"></div>
+          </div>
+        </div>
+
+        <div class="pdf-section">
+          <h2 class="pdf-section-title">五行バランス</h2>
+          <p id="pdf-report-element-note" class="pdf-body"></p>
+          <div id="pdf-report-scores"></div>
+        </div>
+
+        <div class="pdf-section">
+          <h2 class="pdf-section-title">5つの分析</h2>
+          <div id="pdf-report-pillars" class="pdf-pillar-grid"></div>
+        </div>
+
+        <div class="pdf-section">
+          <h2 class="pdf-section-title">長所・短所・総合運</h2>
+          <div id="pdf-report-fortunes" class="pdf-fortune-grid"></div>
+        </div>
+
+        <p class="pdf-footer-note">ケツ印一家 / Personal diagnosis report</p>
+      </div>
+    </section>
   </main>
 
   <footer class="px-4 pb-10 text-center font-black text-deep sm:px-6">
@@ -504,6 +707,6 @@
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
-  <script src="animals.js?v=20260620-04" defer></script>
+  <script src="animals.js?v=20260621-01" defer></script>
 </body>
 </html>

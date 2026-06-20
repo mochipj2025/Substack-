@@ -28,6 +28,17 @@ const fiveElementScoreBars = document.querySelector("#five-element-score-bars");
 const savePdfButton = document.querySelector("#save-pdf-button");
 const savePdfStatus = document.querySelector("#save-pdf-status");
 const resultPdfSection = document.querySelector("#result-pdf-section");
+const pdfReportSection = document.querySelector("#pdf-report-section");
+const pdfReportTitle = document.querySelector("#pdf-report-title");
+const pdfReportLead = document.querySelector("#pdf-report-lead");
+const pdfReportImage = document.querySelector("#pdf-report-image");
+const pdfReportMainTitle = document.querySelector("#pdf-report-main-title");
+const pdfReportSummary = document.querySelector("#pdf-report-summary");
+const pdfReportChips = document.querySelector("#pdf-report-chips");
+const pdfReportElementNote = document.querySelector("#pdf-report-element-note");
+const pdfReportScores = document.querySelector("#pdf-report-scores");
+const pdfReportPillars = document.querySelector("#pdf-report-pillars");
+const pdfReportFortunes = document.querySelector("#pdf-report-fortunes");
 const analysisAnimalBadge = document.querySelector("#analysis-animal-badge");
 const analysisAnimalTitle = document.querySelector("#analysis-animal-title");
 const analysisAnimalBody = document.querySelector("#analysis-animal-body");
@@ -485,6 +496,7 @@ function renderFortuneCard() {
   renderAnalysis(animal, elementId, numerology, zodiac, blood);
   renderDeepReading(animal, elementId, numerology, zodiac, blood);
   renderImagePrompt(animal, elementId, numerology, zodiac, blood);
+  renderPdfReport(animal, elementId, numerology, zodiac, blood);
   renderElementChips();
 }
 
@@ -587,6 +599,111 @@ function renderFiveElementScores(primaryElementId) {
     })
   );
   fiveElementScorePanel.classList.remove("hidden");
+}
+
+function createPdfMiniCard(title, body) {
+  const card = document.createElement("article");
+  card.className = "pdf-mini-card";
+
+  const heading = document.createElement("h3");
+  heading.textContent = title;
+
+  const text = document.createElement("p");
+  text.textContent = body;
+
+  card.append(heading, text);
+  return card;
+}
+
+function renderPdfReport(animal, elementId, numerology, zodiac, blood) {
+  if (!pdfReportSection || !pdfReportMainTitle || !pdfReportSummary) return;
+
+  const element = elements[elementId] || elements.wood;
+  const animalCore = diagnosisWarehouse?.animalCore?.[animal.id];
+  const numberReading = numerologyReadings[numerology] || numerologyReadings[3];
+  const zodiacReading = zodiacReadings[zodiac] || zodiacReadings.capricorn;
+  const bloodReading = bloodReadings[blood] || bloodReadings["不明"];
+  const resultTitle = buildResultSummaryTitle(animal, element, animalCore);
+  const animalPhrase = animalCore?.oneLine || `${animal.nameJa}タイプの持ち味`;
+  const summary = `${animalPhrase} ${buildFiveElementScoreSentence(elementId)}そこに、数秘${numerology}の「${numberReading.title}」、${zodiacReading.ja}の感性、${blood}型の対人傾向が重なります。`;
+
+  if (pdfReportTitle) pdfReportTitle.textContent = "ケツ印どうぶつ診断 結果レポート";
+  if (pdfReportLead) pdfReportLead.textContent = "動物占い、五行、数秘術、星座、血液型を重ねた個人向けレポートです。";
+  if (pdfReportImage) {
+    pdfReportImage.src = animal.image;
+    pdfReportImage.alt = animal.nameJa;
+  }
+  pdfReportMainTitle.textContent = resultTitle;
+  pdfReportSummary.textContent = summary;
+
+  if (pdfReportChips) {
+    const chips = [
+      `動物 ${animal.nameJa}`,
+      `五行 ${element.ja}`,
+      `数秘 ${numerology}`,
+      `星座 ${zodiacReading.ja}`,
+      `血液型 ${blood}`
+    ];
+    pdfReportChips.replaceChildren(...chips.map((chip) => {
+      const span = document.createElement("span");
+      span.className = "pdf-chip";
+      span.textContent = chip;
+      return span;
+    }));
+  }
+
+  const scores = getFiveElementScores();
+  if (pdfReportElementNote) {
+    pdfReportElementNote.textContent = scores
+      ? buildFiveElementScoreSentence(elementId)
+      : `${element.ja}の「${element.title}」力を中心に読んでいます。`;
+  }
+
+  if (pdfReportScores) {
+    if (!scores) {
+      pdfReportScores.replaceChildren(createPdfMiniCard("五行スコア", "質問結果がないため、選択中の五行を中心に表示しています。"));
+    } else {
+      const sortedScores = getSortedElementScores(scores);
+      const maxScore = Math.max(...sortedScores.map((item) => item.score), 1);
+      pdfReportScores.replaceChildren(...Object.entries(elements).map(([id, item]) => {
+        const score = scores[id] || 0;
+        const percentage = Math.max(8, Math.round((score / maxScore) * 100));
+        const row = document.createElement("div");
+        row.className = "pdf-score-row";
+        row.innerHTML = `
+          <div class="pdf-score-head">
+            <span>${item.ja} / ${item.title}</span>
+            <span>${score}点</span>
+          </div>
+          <div class="pdf-score-track">
+            <div class="pdf-score-fill" style="width: ${percentage}%"></div>
+          </div>
+        `;
+        return row;
+      }));
+    }
+  }
+
+  if (pdfReportPillars) {
+    pdfReportPillars.replaceChildren(
+      createPdfMiniCard(`動物：${animal.nameJa}`, animalCore?.oneLine || "動物タイプの基本傾向を見ます。"),
+      createPdfMiniCard(`五行：${element.ja}`, element.summary),
+      createPdfMiniCard(`数秘：${numerology}`, `${numberReading.title}。${numberReading.body}`),
+      createPdfMiniCard(`星座：${zodiacReading.ja}`, `${zodiacReading.title}。${zodiacReading.body}`),
+      createPdfMiniCard(`血液型：${blood}`, `${bloodReading.title}。${bloodReading.body}`)
+    );
+  }
+
+  if (pdfReportFortunes) {
+    const strengths = animalCore?.strengths?.slice(0, 3).join("、") || "自分らしい持ち味";
+    const weaknesses = animalCore?.weakPoints?.slice(0, 3).join("、") || "疲れた時の偏り";
+    pdfReportFortunes.replaceChildren(
+      createPdfMiniCard("長所", `${animalCore?.nameJa || animal.nameJa}の長所は、${strengths}に出ます。${element.ja}の力が重なることで、持ち味を現実の場で使いやすくなります。`),
+      createPdfMiniCard("短所・注意点", `注意点は、${weaknesses}です。偏りを直すより、早めに気づいて扱うことが開運の近道です。`),
+      createPdfMiniCard("総合運", `数秘${numerology}のテーマと${zodiacReading.ja}の感性が合わさるため、意味を感じる役割ほど運が動きます。小さく続けるほど成果につながります。`),
+      createPdfMiniCard("回復ヒント", animalCore?.recoveryHint || "無理に別人になろうとせず、落ち着ける時間を作ると戻ってきます。")
+    );
+  }
 }
 
 function renderList(target, items) {
@@ -854,7 +971,8 @@ function setPdfStatus(message, isError = false) {
 }
 
 async function saveResultPdf() {
-  if (!savePdfButton || !resultPdfSection) return;
+  const pdfTarget = pdfReportSection || resultPdfSection;
+  if (!savePdfButton || !pdfTarget) return;
 
   if (!window.html2pdf) {
     setPdfStatus("PDF保存の準備がまだ完了していません。少し待ってからもう一度押してください。", true);
@@ -894,7 +1012,7 @@ async function saveResultPdf() {
         },
         pagebreak: { mode: ["avoid-all", "css", "legacy"] }
       })
-      .from(resultPdfSection)
+      .from(pdfTarget)
       .save();
 
     setPdfStatus("PDFを保存しました。ダウンロードフォルダを確認してください。");
