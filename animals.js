@@ -2,6 +2,7 @@ const animalGrid = document.querySelector("#animal-grid");
 const modeButtons = document.querySelectorAll("[data-view-mode]");
 const animalsPageTitle = document.querySelector("#animals-page-title");
 const animalsPageLead = document.querySelector("#animals-page-lead");
+const prepRoomBadge = document.querySelector("#prep-room-badge");
 const cardControlPanel = document.querySelector("#card-control-panel");
 const personalResultPanel = document.querySelector("#personal-result-panel");
 const cardAnimalSelect = document.querySelector("#card-animal-select");
@@ -428,6 +429,7 @@ function applyPageMode() {
   if (animalsPageLead) {
     animalsPageLead.textContent = "今回の診断結果を表示しています。五行、数秘術、血液型の詳しい分析もこのページで読めます。";
   }
+  prepRoomBadge?.classList.add("hidden");
   cardControlPanel?.classList.add("hidden");
   personalResultPanel?.classList.remove("hidden");
   resultStockSection?.classList.add("hidden");
@@ -985,6 +987,7 @@ async function saveResultPdf() {
   savePdfButton.disabled = true;
   savePdfButton.textContent = "PDF作成中";
   setPdfStatus("PDFを作成しています。保存が始まるまで少し待ってください。");
+  pdfReportSection?.classList.add("is-generating");
 
   try {
     await window.html2pdf()
@@ -1020,6 +1023,7 @@ async function saveResultPdf() {
     console.error(error);
     setPdfStatus("PDF保存に失敗しました。ページを再読み込みしてもう一度試してください。", true);
   } finally {
+    pdfReportSection?.classList.remove("is-generating");
     savePdfButton.disabled = false;
     savePdfButton.textContent = "PDF保存";
   }

@@ -123,13 +123,20 @@
     .pdf-report {
       background: #fffaf4;
       color: #26313b;
+      display: none;
       font-family: "Noto Sans JP", sans-serif;
-      left: -10000px;
       line-height: 1.75;
       padding: 0;
+      width: 794px;
+    }
+
+    .pdf-report.is-generating {
+      display: block;
+      left: 0;
+      pointer-events: none;
       position: fixed;
       top: 0;
-      width: 794px;
+      z-index: -1;
     }
 
     .pdf-page {
@@ -335,7 +342,7 @@
         </a>
         <div class="flex flex-wrap gap-2">
           <a href="diagnosis.html" class="rounded-full bg-festival px-3 py-2 text-sm font-black text-white shadow-sm transition hover:bg-festivalDark">診断を試す</a>
-          <span class="rounded-full bg-deep px-3 py-2 text-sm font-bold text-white">どうぶつ占い準備室</span>
+          <span id="prep-room-badge" class="rounded-full bg-deep px-3 py-2 text-sm font-bold text-white">どうぶつ占い準備室</span>
         </div>
       </nav>
 
@@ -707,6 +714,6 @@
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
-  <script src="animals.js?v=20260621-01" defer></script>
+  <script src="animals.js?v=20260621-02" defer></script>
 </body>
 </html>
