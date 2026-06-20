@@ -136,7 +136,20 @@
       pointer-events: none;
       position: fixed;
       top: 0;
-      z-index: -1;
+      z-index: 9999;
+    }
+
+    .pdf-export-stage {
+      align-items: flex-start;
+      background: #ffffff;
+      display: flex;
+      inset: 0;
+      justify-content: center;
+      overflow: auto;
+      padding: 18px;
+      pointer-events: none;
+      position: fixed;
+      z-index: 9999;
     }
 
     .pdf-page {
@@ -714,6 +727,6 @@
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
-  <script src="animals.js?v=20260621-02" defer></script>
+  <script src="animals.js?v=20260621-03" defer></script>
 </body>
 </html>

@@ -972,9 +972,26 @@ function setPdfStatus(message, isError = false) {
     : "no-print mt-3 rounded-lg bg-[#fff4e8] px-4 py-3 text-sm font-black leading-7 text-deep";
 }
 
+function createPdfExportStage(source) {
+  if (!source) return null;
+
+  const stage = document.createElement("div");
+  stage.className = "pdf-export-stage";
+
+  const clone = source.cloneNode(true);
+  clone.id = "pdf-report-export-copy";
+  clone.classList.remove("no-print");
+  clone.classList.add("is-generating");
+  clone.removeAttribute("aria-hidden");
+
+  stage.append(clone);
+  document.body.append(stage);
+
+  return { stage, target: clone };
+}
+
 async function saveResultPdf() {
-  const pdfTarget = pdfReportSection || resultPdfSection;
-  if (!savePdfButton || !pdfTarget) return;
+  if (!savePdfButton || (!pdfReportSection && !resultPdfSection)) return;
 
   if (!window.html2pdf) {
     setPdfStatus("PDF保存の準備がまだ完了していません。少し待ってからもう一度押してください。", true);
@@ -987,7 +1004,8 @@ async function saveResultPdf() {
   savePdfButton.disabled = true;
   savePdfButton.textContent = "PDF作成中";
   setPdfStatus("PDFを作成しています。保存が始まるまで少し待ってください。");
-  pdfReportSection?.classList.add("is-generating");
+  const exportStage = createPdfExportStage(pdfReportSection || resultPdfSection);
+  const pdfTarget = exportStage?.target || resultPdfSection;
 
   try {
     await window.html2pdf()
@@ -1023,7 +1041,7 @@ async function saveResultPdf() {
     console.error(error);
     setPdfStatus("PDF保存に失敗しました。ページを再読み込みしてもう一度試してください。", true);
   } finally {
-    pdfReportSection?.classList.remove("is-generating");
+    exportStage?.stage.remove();
     savePdfButton.disabled = false;
     savePdfButton.textContent = "PDF保存";
   }
