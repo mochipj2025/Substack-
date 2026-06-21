@@ -859,22 +859,22 @@ function buildIconImagePrompt(animal, elementId, numerology, zodiac, blood) {
 
   return [
     "Create a square 1:1 SNS profile icon illustration for Image 2.0. Canvas ratio 1:1, recommended size 1024x1024.",
-    "Use the attached profile photo or current user icon as the visual reference. Do not copy it photorealistically; transform it into an original pixel art avatar blended with the diagnosis mascot.",
+    "Use the attached profile photo or current user icon as the visual reference. Do not copy it photorealistically; transform it into an original pixel art avatar wearing a cute animal kigurumi costume based on the diagnosis mascot.",
     "",
-    `Main character: a cute original pixel art ${animal.nameJa} pet mascot fused with the referenced person's icon impression, large centered face and upper body, charming and memorable.`,
+    `Main character: the referenced person's icon impression as a cute pixel art avatar wearing a ${animal.nameJa} kigurumi hoodie, large centered face and upper body, charming and memorable.`,
     `Icon identity: ${element.ja} element, numerology ${numerology}, ${zodiacReading.ja}, ${blood} type mood.`,
     `Personality mood: ${animalCore?.resultTitle || animal.nameJa} / ${keywords}.`,
     `Five elements theme: ${element.en} / ${element.ja}, ${element.summary}`,
     `Blood type nuance: ${bloodReading.title}.`,
     "",
     "Reference handling: preserve only the broad identity cues from the attached icon, such as hairstyle silhouette, glasses or accessories, favorite color mood, facial expression energy, and overall vibe. Avoid exact face duplication.",
-    "Blend design: make the avatar feel like the person has become this diagnosis animal mascot. Add small animal features naturally, such as ears, tail motif, fur pattern, or charm accessory, while keeping the referenced icon's recognizable mood.",
+    `Kigurumi design: make the person look like they are happily wearing a soft ${animal.nameJa} animal costume. Use a cozy hood with animal ears, small tail motif, soft paws or mittens, and subtle fur pattern details. Keep the face human-avatar-like and friendly, not a full animal face.`,
     "Visual style: premium 32-bit pixel art icon, clean silhouette, expressive eyes, crisp sprite-like edges, polished app icon quality.",
-    "Composition: centered avatar mascot, face clearly visible at small size, soft circular elemental background, tiny five-elements charm mark, no crowded layout.",
+    "Composition: centered kigurumi avatar, face clearly visible at small size, hood framing the face, soft circular elemental background, tiny five-elements charm mark, no crowded layout.",
     "Text rules: no text, no letters, no numbers, no badge labels. Use only visual symbols so the icon stays readable.",
     "Background: soft round backdrop using the five-elements accent color, warm off-white outer margin, subtle festival charm details.",
     "Quality: high detail pixel illustration, friendly, not realistic, not scary, no watermark, no logo, no extra limbs, no distorted face.",
-    "Output: one finished square SNS icon image, 1:1 aspect ratio, optimized for profile pictures and chat avatars, clearly based on the reference icon's atmosphere plus the diagnosis result."
+    "Output: one finished square SNS icon image, 1:1 aspect ratio, optimized for profile pictures and chat avatars, clearly based on the reference icon's atmosphere plus a cute diagnosis-animal kigurumi costume."
   ].join("\n");
 }
 
@@ -891,7 +891,7 @@ function updateImagePromptModeUi() {
 
   if (imagePromptDescription) {
     imagePromptDescription.textContent = isIconMode
-      ? "本人のアイコン画像をImage 2.0に添付して使うPromptです。雰囲気を参照しながら、診断どうぶつと合成した1:1正方形アイコンにします。"
+      ? "本人のアイコン画像をImage 2.0に添付して使うPromptです。雰囲気を参照しながら、診断どうぶつの着ぐるみ風1:1アイコンにします。"
       : "4:5縦長の診断結果カードを作るためのPromptです。スマホで共有しやすい1枚絵にします。";
   }
 
