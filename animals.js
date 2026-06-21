@@ -972,22 +972,122 @@ function setPdfStatus(message, isError = false) {
     : "no-print mt-3 rounded-lg bg-[#fff4e8] px-4 py-3 text-sm font-black leading-7 text-deep";
 }
 
-function createPdfExportStage(source) {
-  if (!source) return null;
+function createInlinePdfReportElement() {
+  const report = document.createElement("section");
+  report.style.cssText = "width:794px;min-height:1123px;background:#fffaf4;color:#26313b;font-family:'Noto Sans JP',sans-serif;padding:38px;border:1px solid #eadfd4;box-sizing:border-box;line-height:1.75;";
+
+  const title = resultSummaryTitle?.textContent || "ケツ印どうぶつ診断 結果レポート";
+  const summary = resultSummaryBody?.textContent || "";
+  const chips = Array.from(resultSummaryChips?.children || []).map((chip) => chip.textContent || "");
+  const scores = getFiveElementScores();
+  const scoreRows = scores
+    ? Object.entries(elements).map(([id, element]) => ({ label: `${element.ja} / ${element.title}`, score: scores[id] || 0 }))
+    : [];
+  const maxScore = Math.max(...scoreRows.map((item) => item.score), 1);
+  const analysisCards = [
+    [analysisAnimalTitle?.textContent || "動物", analysisAnimalBody?.textContent || ""],
+    [analysisElementTitle?.textContent || "五行", analysisElementBody?.textContent || ""],
+    [analysisNumberTitle?.textContent || "数秘", analysisNumberBody?.textContent || ""],
+    [analysisZodiacTitle?.textContent || "星座", analysisZodiacBody?.textContent || ""],
+    [analysisBloodTitle?.textContent || "血液型", analysisBloodBody?.textContent || ""],
+    ["長所", fortuneStrengthSummary?.textContent || ""],
+    ["短所・注意点", fortuneWeaknessSummary?.textContent || ""],
+    ["総合運", fortuneOverallSummary?.textContent || ""]
+  ];
+
+  const kicker = document.createElement("p");
+  kicker.textContent = "Ketsujirushi Animal Fortune Report";
+  kicker.style.cssText = "margin:0;color:#bf5f0f;font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;";
+
+  const h1 = document.createElement("h1");
+  h1.textContent = "ケツ印どうぶつ診断 結果レポート";
+  h1.style.cssText = "margin:8px 0 0;color:#2c3e50;font-size:30px;font-weight:900;line-height:1.35;";
+
+  const lead = document.createElement("p");
+  lead.textContent = "動物占い、五行、数秘術、星座、血液型を重ねた個人向けレポートです。";
+  lead.style.cssText = "margin:12px 0 0;color:#596675;font-size:13px;font-weight:700;";
+
+  const hero = document.createElement("div");
+  hero.style.cssText = "display:grid;grid-template-columns:170px 1fr;gap:22px;align-items:center;margin-top:24px;padding:22px;background:#fff;border:1px solid #eadfd4;border-radius:12px;";
+
+  const heroImage = document.createElement("img");
+  heroImage.src = fortuneCardImage?.src || "";
+  heroImage.alt = fortuneCardImage?.alt || "";
+  heroImage.style.cssText = "width:150px;height:150px;object-fit:contain;image-rendering:pixelated;";
+
+  const heroText = document.createElement("div");
+  const mainTitle = document.createElement("h2");
+  mainTitle.textContent = title;
+  mainTitle.style.cssText = "margin:0;color:#2c3e50;font-size:20px;font-weight:900;line-height:1.45;";
+  const mainSummary = document.createElement("p");
+  mainSummary.textContent = summary;
+  mainSummary.style.cssText = "margin:10px 0 0;color:#3d4752;font-size:12px;font-weight:700;";
+  const chipList = document.createElement("div");
+  chipList.style.cssText = "display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;";
+  chips.forEach((chip) => {
+    const span = document.createElement("span");
+    span.textContent = chip;
+    span.style.cssText = "display:inline-block;background:#fff4e8;border-radius:999px;color:#2c3e50;font-size:11px;font-weight:900;padding:6px 10px;";
+    chipList.append(span);
+  });
+  heroText.append(mainTitle, mainSummary, chipList);
+  hero.append(heroImage, heroText);
+
+  const scoreSection = document.createElement("div");
+  scoreSection.style.cssText = "margin-top:16px;padding:18px;background:#fff;border:1px solid #eadfd4;border-radius:12px;";
+  const scoreTitle = document.createElement("h2");
+  scoreTitle.textContent = "五行バランス";
+  scoreTitle.style.cssText = "margin:0;color:#2c3e50;font-size:18px;font-weight:900;";
+  scoreSection.append(scoreTitle);
+  scoreRows.forEach((row) => {
+    const wrap = document.createElement("div");
+    wrap.style.cssText = "display:grid;gap:8px;margin-top:10px;";
+    const head = document.createElement("div");
+    head.style.cssText = "display:flex;justify-content:space-between;font-size:11px;font-weight:900;";
+    head.innerHTML = `<span>${row.label}</span><span>${row.score}点</span>`;
+    const track = document.createElement("div");
+    track.style.cssText = "height:8px;background:#fff4e8;border-radius:999px;overflow:hidden;";
+    const fill = document.createElement("div");
+    fill.style.cssText = `height:100%;width:${Math.max(8, Math.round((row.score / maxScore) * 100))}%;background:#e67e22;border-radius:999px;`;
+    track.append(fill);
+    wrap.append(head, track);
+    scoreSection.append(wrap);
+  });
+
+  const cards = document.createElement("div");
+  cards.style.cssText = "display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;";
+  analysisCards.forEach(([cardTitle, cardBody]) => {
+    const card = document.createElement("article");
+    card.style.cssText = "background:#fff;border:1px solid #eadfd4;border-radius:12px;padding:14px;break-inside:avoid;";
+    const h3 = document.createElement("h3");
+    h3.textContent = cardTitle;
+    h3.style.cssText = "margin:0;color:#2c3e50;font-size:13px;font-weight:900;";
+    const p = document.createElement("p");
+    p.textContent = cardBody;
+    p.style.cssText = "margin:6px 0 0;color:#4d5965;font-size:10.5px;font-weight:700;";
+    card.append(h3, p);
+    cards.append(card);
+  });
+
+  const footer = document.createElement("p");
+  footer.textContent = "ケツ印一家 / Personal diagnosis report";
+  footer.style.cssText = "margin:18px 0 0;color:#7c8792;font-size:10px;font-weight:700;text-align:right;";
+
+  report.append(kicker, h1, lead, hero, scoreSection, cards, footer);
+  return report;
+}
+
+function createPdfExportStage() {
+  const source = createInlinePdfReportElement();
 
   const stage = document.createElement("div");
   stage.className = "pdf-export-stage";
 
-  const clone = source.cloneNode(true);
-  clone.id = "pdf-report-export-copy";
-  clone.classList.remove("no-print");
-  clone.classList.add("is-generating");
-  clone.removeAttribute("aria-hidden");
-
-  stage.append(clone);
+  source.id = "pdf-report-export-copy";
+  stage.append(source);
   document.body.append(stage);
 
-  return { stage, target: clone };
+  return { stage, target: source };
 }
 
 async function saveResultPdf() {
@@ -1004,10 +1104,11 @@ async function saveResultPdf() {
   savePdfButton.disabled = true;
   savePdfButton.textContent = "PDF作成中";
   setPdfStatus("PDFを作成しています。保存が始まるまで少し待ってください。");
-  const exportStage = createPdfExportStage(pdfReportSection || resultPdfSection);
+  const exportStage = createPdfExportStage();
   const pdfTarget = exportStage?.target || resultPdfSection;
 
   try {
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
     await window.html2pdf()
       .set({
         margin: [10, 10, 10, 10],
