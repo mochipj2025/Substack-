@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ケツ印どうぶつ診断 結果レポート</title>
+  <meta name="description" content="ケツ印どうぶつ診断のPDF保存向けレポートページです。">
+  <link rel="icon" href="assets/icon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #e9e4dd;
+      color: #26313b;
+      font-family: "Noto Sans JP", system-ui, sans-serif;
+      margin: 0;
+    }
+
+    .toolbar {
+      align-items: center;
+      background: #2c3e50;
+      color: #ffffff;
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      padding: 12px 18px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .toolbar p {
+      font-size: 14px;
+      font-weight: 900;
+      margin: 0;
+    }
+
+    .toolbar a,
+    .toolbar button {
+      align-items: center;
+      border: 0;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 900;
+      justify-content: center;
+      min-height: 40px;
+      padding: 9px 14px;
+      text-decoration: none;
+    }
+
+    .toolbar a {
+      background: #ffffff;
+      color: #2c3e50;
+    }
+
+    .toolbar button {
+      background: #e67e22;
+      color: #ffffff;
+    }
+
+    .sheet {
+      background: #fffaf4;
+      margin: 24px auto;
+      min-height: 1123px;
+      padding: 42px;
+      width: 794px;
+    }
+
+    .kicker {
+      color: #bf5f0f;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      color: #2c3e50;
+      font-size: 31px;
+      line-height: 1.35;
+      margin: 8px 0 0;
+    }
+
+    h2 {
+      color: #2c3e50;
+      font-size: 19px;
+      margin: 0;
+    }
+
+    h3 {
+      color: #2c3e50;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    p {
+      line-height: 1.75;
+    }
+
+    .lead {
+      color: #596675;
+      font-size: 13px;
+      font-weight: 700;
+      margin: 10px 0 0;
+    }
+
+    .hero {
+      align-items: center;
+      background: #ffffff;
+      border: 1px solid #eadfd4;
+      border-radius: 12px;
+      display: grid;
+      gap: 24px;
+      grid-template-columns: 180px 1fr;
+      margin-top: 26px;
+      padding: 24px;
+    }
+
+    .hero img {
+      height: 160px;
+      image-rendering: pixelated;
+      object-fit: contain;
+      width: 160px;
+    }
+
+    .summary-title {
+      color: #2c3e50;
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1.45;
+      margin: 6px 0 0;
+    }
+
+    .summary-body {
+      color: #3d4752;
+      font-size: 12px;
+      font-weight: 700;
+      margin: 10px 0 0;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .chip {
+      background: #fff4e8;
+      border-radius: 999px;
+      color: #2c3e50;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 6px 10px;
+    }
+
+    .section {
+      background: #ffffff;
+      border: 1px solid #eadfd4;
+      border-radius: 12px;
+      margin-top: 18px;
+      padding: 18px;
+    }
+
+    .score-row {
+      display: grid;
+      gap: 7px;
+      margin-top: 12px;
+    }
+
+    .score-head {
+      display: flex;
+      font-size: 12px;
+      font-weight: 900;
+      justify-content: space-between;
+    }
+
+    .score-track {
+      background: #fff4e8;
+      border-radius: 999px;
+      height: 9px;
+      overflow: hidden;
+    }
+
+    .score-fill {
+      background: #e67e22;
+      border-radius: 999px;
+      height: 100%;
+    }
+
+    .grid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 14px;
+    }
+
+    .card {
+      background: #fffaf4;
+      border: 1px solid #eadfd4;
+      border-radius: 10px;
+      break-inside: avoid;
+      padding: 14px;
+    }
+
+    .card p {
+      color: #4d5965;
+      font-size: 11px;
+      font-weight: 700;
+      margin: 6px 0 0;
+    }
+
+    .footer-note {
+      color: #7c8792;
+      font-size: 10px;
+      font-weight: 700;
+      margin-top: 20px;
+      text-align: right;
+    }
+
+    @page {
+      margin: 0;
+      size: A4;
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+      }
+
+      .toolbar {
+        display: none;
+      }
+
+      .sheet {
+        margin: 0;
+        min-height: 297mm;
+        width: 210mm;
+      }
+    }
+
+    @media (max-width: 840px) {
+      .sheet {
+        margin: 0;
+        min-height: auto;
+        padding: 24px;
+        width: 100%;
+      }
+
+      .hero,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <p>PDF用レポートページ</p>
+    <div>
+      <a id="back-link" href="animals.html">結果ページへ戻る</a>
+      <button id="print-button" type="button">PDFに保存</button>
+    </div>
+  </div>
+
+  <main class="sheet" id="report-sheet">
+    <p class="kicker">Ketsujirushi Animal Fortune Report</p>
+    <h1>ケツ印どうぶつ診断 結果レポート</h1>
+    <p class="lead">動物占い、五行、数秘術、星座、血液型を重ねた個人向けレポートです。</p>
+
+    <section class="hero">
+      <img id="animal-image" src="assets/animals/tanuki.png" alt="">
+      <div>
+        <p class="kicker">Result Summary</p>
+        <div id="summary-title" class="summary-title">診断結果を読み込み中</div>
+        <p id="summary-body" class="summary-body"></p>
+        <div id="summary-chips" class="chips"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>五行バランス</h2>
+      <p id="element-note" class="summary-body"></p>
+      <div id="score-list"></div>
+    </section>
+
+    <section class="section">
+      <h2>5つの分析</h2>
+      <div id="pillar-grid" class="grid"></div>
+    </section>
+
+    <section class="section">
+      <h2>長所・短所・総合運</h2>
+      <div id="fortune-grid" class="grid"></div>
+    </section>
+
+    <p class="footer-note">ケツ印一家 / Personal diagnosis report</p>
+  </main>
+
+  <script src="report.js?v=20260621-01" defer></script>
+</body>
+</html>
