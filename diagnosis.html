@@ -39,13 +39,15 @@
       max-width: 100%;
     }
 
-    #birth-date {
-      display: block;
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-      appearance: none;
+    #birth-number-inputs input {
+      appearance: textfield;
+      -moz-appearance: textfield;
+    }
+
+    #birth-number-inputs input::-webkit-outer-spin-button,
+    #birth-number-inputs input::-webkit-inner-spin-button {
       -webkit-appearance: none;
+      margin: 0;
     }
   </style>
 </head>
@@ -79,10 +81,25 @@
           <input id="user-name" class="min-h-12 w-full min-w-0 rounded-lg border border-[#eadfd4] bg-white px-3 py-2 text-base font-bold text-deep" type="text" autocomplete="name" placeholder="もちスラ">
         </label>
 
-        <label class="grid min-w-0 gap-2 text-sm font-black text-deep">
+        <div class="grid min-w-0 gap-2 text-sm font-black text-deep">
           生年月日
-          <input id="birth-date" class="min-h-12 w-full min-w-0 rounded-lg border border-[#eadfd4] bg-white px-3 py-2 text-base font-bold text-deep" type="date" required>
-        </label>
+          <div id="birth-number-inputs" class="grid min-w-0 gap-3 sm:grid-cols-[1.4fr_1fr_1fr]">
+            <label class="grid min-w-0 gap-1">
+              <span class="text-xs text-slate-500">年</span>
+              <input id="birth-year" class="min-h-12 w-full min-w-0 rounded-lg border border-[#eadfd4] bg-white px-3 py-2 text-base font-bold text-deep" type="number" inputmode="numeric" min="1910" max="2026" autocomplete="bday-year" placeholder="1987">
+            </label>
+            <label class="grid min-w-0 gap-1">
+              <span class="text-xs text-slate-500">月</span>
+              <input id="birth-month" class="min-h-12 w-full min-w-0 rounded-lg border border-[#eadfd4] bg-white px-3 py-2 text-base font-bold text-deep" type="number" inputmode="numeric" min="1" max="12" autocomplete="bday-month" placeholder="4">
+            </label>
+            <label class="grid min-w-0 gap-1">
+              <span class="text-xs text-slate-500">日</span>
+              <input id="birth-day" class="min-h-12 w-full min-w-0 rounded-lg border border-[#eadfd4] bg-white px-3 py-2 text-base font-bold text-deep" type="number" inputmode="numeric" min="1" max="31" autocomplete="bday-day" placeholder="25">
+            </label>
+          </div>
+          <p class="text-xs font-bold leading-6 text-slate-500">数字で入力してください。例：1987年 4月 25日</p>
+          <input id="birth-date" type="hidden">
+        </div>
 
         <div class="grid gap-2 text-sm font-black text-deep">
           動物タイプ
@@ -141,6 +158,6 @@
     </section>
   </main>
 
-  <script src="diagnosis.js?v=20260621-1" defer></script>
+  <script src="diagnosis.js?v=20260623-1" defer></script>
 </body>
 </html>

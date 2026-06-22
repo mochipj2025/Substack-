@@ -6,6 +6,9 @@ const profileError = document.querySelector("#profile-error");
 const profileSummary = document.querySelector("#profile-summary");
 const backToProfile = document.querySelector("#back-to-profile");
 const birthDateInput = document.querySelector("#birth-date");
+const birthYearInput = document.querySelector("#birth-year");
+const birthMonthInput = document.querySelector("#birth-month");
+const birthDayInput = document.querySelector("#birth-day");
 const calculatedAnimal = document.querySelector("#calculated-animal");
 const calculatedAnimalDetail = document.querySelector("#calculated-animal-detail");
 const fiveElementsQuestions = document.querySelector("#five-elements-questions");
@@ -366,7 +369,58 @@ function getBirthMonthDay(dateValue) {
   return `${month}-${day}`;
 }
 
+function padBirthPart(value) {
+  return String(value).padStart(2, "0");
+}
+
+function syncBirthDateFromNumberInputs() {
+  const yearValue = birthYearInput.value.trim();
+  const monthValue = birthMonthInput.value.trim();
+  const dayValue = birthDayInput.value.trim();
+
+  if (!yearValue || !monthValue || !dayValue) {
+    birthDateInput.value = "";
+    return "";
+  }
+
+  const year = Number(yearValue);
+  const month = Number(monthValue);
+  const day = Number(dayValue);
+  const currentYear = new Date().getFullYear();
+  const isInRange =
+    Number.isInteger(year) &&
+    Number.isInteger(month) &&
+    Number.isInteger(day) &&
+    year >= 1910 &&
+    year <= currentYear &&
+    month >= 1 &&
+    month <= 12 &&
+    day >= 1 &&
+    day <= 31;
+
+  if (!isInRange) {
+    birthDateInput.value = "";
+    return "";
+  }
+
+  const date = new Date(year, month - 1, day);
+  const isRealDate =
+    date.getFullYear() === year &&
+    date.getMonth() === month - 1 &&
+    date.getDate() === day;
+
+  if (!isRealDate) {
+    birthDateInput.value = "";
+    return "";
+  }
+
+  const dateValue = `${year}-${padBirthPart(month)}-${padBirthPart(day)}`;
+  birthDateInput.value = dateValue;
+  return dateValue;
+}
+
 function updateCalculatedAnimal() {
+  syncBirthDateFromNumberInputs();
   const result = calculateAnimalType(birthDateInput.value);
   if (!result) {
     calculatedAnimal.textContent = "生年月日を入れると自動で出ます";
@@ -435,8 +489,10 @@ document.querySelectorAll('input[name="blood-type"]').forEach((input) => {
   input.addEventListener("change", updateBloodStyles);
 });
 
-birthDateInput.addEventListener("change", updateCalculatedAnimal);
-birthDateInput.addEventListener("input", updateCalculatedAnimal);
+[birthYearInput, birthMonthInput, birthDayInput].forEach((input) => {
+  input.addEventListener("change", updateCalculatedAnimal);
+  input.addEventListener("input", updateCalculatedAnimal);
+});
 renderFiveElementQuestions();
 
 profileForm.addEventListener("submit", (event) => {
@@ -444,13 +500,14 @@ profileForm.addEventListener("submit", (event) => {
   profileError.classList.add("hidden");
 
   const formData = new FormData(profileForm);
+  syncBirthDateFromNumberInputs();
   const birthDate = birthDateInput.value;
   const animalResult = calculateAnimalType(birthDate);
   const bloodType = formData.get("blood-type");
   const name = document.querySelector("#user-name").value.trim() || "あなた";
 
   if (!birthDate) {
-    showProfileError("生年月日を入れてください。");
+    showProfileError("生年月日を数字で正しく入れてください。");
     return;
   }
 
