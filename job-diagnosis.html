@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ケツ印ファンタジージョブ診断</title>
+  <meta name="description" content="質問だけで属性、ジョブ、ステータス、運勢を出すケツ印一家のオリジナル診断サイトです。">
+  <link rel="icon" href="assets/app-icon.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/app-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            base: "#f8f6f1",
+            parchment: "#fffaf2",
+            flame: "#e66f2a",
+            moss: "#4b8f65",
+            deep: "#26313b",
+            ink: "#202833",
+            violet: "#6f5bd6"
+          },
+          fontFamily: {
+            sans: ['"Noto Sans JP"', "ui-sans-serif", "system-ui", "sans-serif"]
+          },
+          boxShadow: {
+            soft: "0 18px 50px rgba(38, 49, 59, 0.13)"
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    input,
+    button {
+      font: inherit;
+    }
+
+    .job-card {
+      background:
+        linear-gradient(135deg, rgba(255, 250, 242, 0.95), rgba(255, 255, 255, 0.92)),
+        radial-gradient(circle at 18% 18%, rgba(230, 111, 42, 0.15), transparent 34%),
+        radial-gradient(circle at 84% 16%, rgba(75, 143, 101, 0.14), transparent 32%);
+    }
+
+    .answer-card:has(input:checked) {
+      border-color: #e66f2a;
+      background: #fff4e8;
+      box-shadow: 0 10px 28px rgba(230, 111, 42, 0.14);
+    }
+
+    .stat-fill {
+      transition: width 0.45s ease;
+    }
+
+    @media (max-width: 640px) {
+      .result-title {
+        font-size: 2rem !important;
+        line-height: 1.18 !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-base font-sans text-ink antialiased">
+  <header class="px-4 pt-6 sm:px-6">
+    <div class="mx-auto max-w-5xl">
+      <nav class="flex flex-wrap items-center justify-between gap-3">
+        <a href="diagnosis.html" class="inline-flex items-center gap-2 rounded-full border border-deep/10 bg-white/90 px-3 py-2 text-sm font-black text-deep shadow-sm">
+          <img src="assets/app-icon.png" alt="" class="h-6 w-6 rounded-full object-cover">
+          どうぶつ診断へ
+        </a>
+        <span class="rounded-full bg-deep px-3 py-2 text-sm font-black text-white">Original Quest</span>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto grid max-w-5xl gap-6 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start">
+    <section class="rounded-lg border border-[#eadfd4] bg-white/95 p-5 shadow-soft sm:p-7" aria-labelledby="job-diagnosis-title">
+      <p class="text-sm font-black uppercase text-flame">Ketsu Fantasy Job</p>
+      <h1 id="job-diagnosis-title" class="mt-2 text-3xl font-black leading-tight text-deep sm:text-5xl">ケツ印ファンタジージョブ診断</h1>
+      <p class="mt-4 leading-8 text-slate-600">生年月日ではなく、今の選び方から属性、役割、どうぶつ、ステータスを出すオリジナル診断です。</p>
+
+      <form id="job-form" class="mt-6 grid gap-6">
+        <label class="grid gap-2 text-sm font-black text-deep">
+          表示名
+          <input id="player-name" class="min-h-12 w-full rounded-lg border border-[#eadfd4] bg-white px-3 py-2 text-base font-bold text-deep" type="text" autocomplete="nickname" placeholder="もちスラ">
+        </label>
+
+        <div id="question-list" class="grid gap-5"></div>
+
+        <p id="form-error" class="hidden rounded-lg bg-red-50 px-4 py-3 text-sm font-bold text-red-700" aria-live="polite"></p>
+
+        <button class="min-h-14 rounded-lg bg-flame px-6 py-4 text-lg font-black text-white shadow-sm transition hover:bg-[#c95d21]" type="submit">ジョブを鑑定する</button>
+      </form>
+    </section>
+
+    <aside class="job-card sticky top-4 rounded-lg border border-[#eadfd4] p-5 shadow-soft" aria-labelledby="result-title">
+      <p class="text-sm font-black uppercase text-flame">Result Card</p>
+      <div class="mt-5 grid place-items-center rounded-lg border border-white/80 bg-white/72 p-4">
+        <img id="result-animal-image" src="assets/animals/tanuki.png" alt="" class="h-40 w-40 object-contain [image-rendering:pixelated]">
+      </div>
+
+      <p id="result-code" class="mt-5 inline-flex rounded-full bg-deep px-3 py-2 text-sm font-black text-white">----型</p>
+      <h2 id="result-title" class="result-title mt-3 text-4xl font-black leading-tight text-deep">診断待ち</h2>
+      <p id="result-subtitle" class="mt-3 text-sm font-black leading-7 text-flame">質問に答えると称号が出ます</p>
+      <p id="result-body" class="mt-3 text-sm font-bold leading-7 text-slate-700">選び方のクセから、あなたの冒険職、属性、得意ステータスを組み立てます。</p>
+
+      <div id="result-tags" class="mt-4 flex flex-wrap gap-2 text-xs font-black"></div>
+
+      <div class="mt-5 rounded-lg bg-white/82 p-4">
+        <h3 class="text-sm font-black uppercase text-deep">Status</h3>
+        <div id="stat-list" class="mt-4 grid gap-3"></div>
+      </div>
+
+      <div class="mt-4 rounded-lg bg-white/82 p-4">
+        <h3 class="text-sm font-black uppercase text-deep">Fortune</h3>
+        <p id="fortune-text" class="mt-2 text-sm font-bold leading-7 text-slate-700">結果に合わせて総合運を表示します。</p>
+      </div>
+    </aside>
+  </main>
+
+  <script src="job-diagnosis.js?v=20260624-01" defer></script>
+</body>
+</html>
