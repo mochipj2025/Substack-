@@ -20,6 +20,8 @@ const fortuneCardSummary = document.querySelector("#fortune-card-summary");
 const fortuneCardNumber = document.querySelector("#fortune-card-number");
 const fortuneCardBlood = document.querySelector("#fortune-card-blood");
 const fortuneCardElementJa = document.querySelector("#fortune-card-element-ja");
+const resultJobTitle = document.querySelector("#result-job-title");
+const resultJobCode = document.querySelector("#result-job-code");
 const resultSummaryTitle = document.querySelector("#result-summary-title");
 const resultSummaryBody = document.querySelector("#result-summary-body");
 const resultSummaryChips = document.querySelector("#result-summary-chips");
@@ -130,6 +132,132 @@ const elements = {
     title: "流れを読む",
     summary: "感受性と知性で、変化の中に道を見つけるタイプ。"
   }
+};
+
+const ketsuJobTitles = {
+  wood: {
+    wolf: "翠の夜道案内人",
+    deer: "翠の心番人",
+    monkey: "翠の閃き奇術師",
+    cheetah: "翠の疾風開拓者",
+    "black-panther": "翠の美学騎士",
+    lion: "翠の王冠統率者",
+    tiger: "翠の不動守護者",
+    tanuki: "翠の宿場案内人",
+    koala: "翠の愉楽作戦係",
+    elephant: "翠の寡黙職人",
+    sheep: "翠の人脈結び手",
+    pegasus: "翠の星渡り"
+  },
+  fire: {
+    wolf: "紅蓮の夜道案内人",
+    deer: "紅蓮の心番人",
+    monkey: "紅蓮の閃き奇術師",
+    cheetah: "紅蓮の疾風開拓者",
+    "black-panther": "紅蓮の美学騎士",
+    lion: "紅蓮の王冠統率者",
+    tiger: "紅蓮の不動守護者",
+    tanuki: "紅蓮の宴相談役",
+    koala: "紅蓮の愉楽作戦係",
+    elephant: "紅蓮の寡黙職人",
+    sheep: "紅蓮の人脈結び手",
+    pegasus: "紅蓮の星渡り"
+  },
+  earth: {
+    wolf: "大地の夜道案内人",
+    deer: "大地の心番人",
+    monkey: "大地の閃き奇術師",
+    cheetah: "大地の疾風開拓者",
+    "black-panther": "大地の美学騎士",
+    lion: "大地の王冠統率者",
+    tiger: "大地の不動守護者",
+    tanuki: "大地の相談役",
+    koala: "大地の愉楽作戦係",
+    elephant: "大地の寡黙職人",
+    sheep: "大地の人脈結び手",
+    pegasus: "大地の空渡り"
+  },
+  metal: {
+    wolf: "白銀の夜道案内人",
+    deer: "白銀の心番人",
+    monkey: "白銀の閃き奇術師",
+    cheetah: "白銀の疾風開拓者",
+    "black-panther": "白銀の美学騎士",
+    lion: "白銀の王冠統率者",
+    tiger: "白銀の不動守護者",
+    tanuki: "白銀の目利き相談役",
+    koala: "白銀の愉楽作戦係",
+    elephant: "白銀の寡黙職人",
+    sheep: "白銀の人脈結び手",
+    pegasus: "白銀の星渡り"
+  },
+  water: {
+    wolf: "月影の夜道案内人",
+    deer: "月影の心番人",
+    monkey: "月影の閃き奇術師",
+    cheetah: "月影の疾風開拓者",
+    "black-panther": "月影の美学騎士",
+    lion: "月影の王冠統率者",
+    tiger: "月影の不動守護者",
+    tanuki: "月影の旅籠相談役",
+    koala: "月影の愉楽作戦係",
+    elephant: "月影の寡黙職人",
+    sheep: "月影の人脈結び手",
+    pegasus: "月影の星渡り"
+  }
+};
+
+const ketsuElementCodes = {
+  wood: ["W", "木"],
+  fire: ["F", "火"],
+  earth: ["E", "土"],
+  metal: ["M", "金"],
+  water: ["A", "水"]
+};
+
+const ketsuAnimalClassCodes = {
+  wolf: ["A", "攻"],
+  cheetah: ["A", "攻"],
+  lion: ["A", "攻"],
+  tiger: ["D", "守"],
+  elephant: ["D", "守"],
+  "black-panther": ["D", "守"],
+  deer: ["S", "援"],
+  sheep: ["S", "援"],
+  tanuki: ["S", "援"],
+  pegasus: ["C", "術"],
+  monkey: ["C", "術"],
+  koala: ["C", "術"]
+};
+
+const ketsuNumberCodes = {
+  1: ["I", "個"],
+  2: ["C", "協"],
+  3: ["I", "個"],
+  4: ["C", "協"],
+  5: ["I", "個"],
+  6: ["C", "協"],
+  7: ["I", "個"],
+  8: ["C", "協"],
+  9: ["I", "個"],
+  11: ["I", "個"],
+  22: ["C", "協"],
+  33: ["I", "個"]
+};
+
+const ketsuZodiacCodes = {
+  aries: ["I", "先"],
+  cancer: ["I", "先"],
+  libra: ["I", "先"],
+  capricorn: ["I", "先"],
+  taurus: ["S", "安"],
+  leo: ["S", "安"],
+  scorpio: ["S", "安"],
+  aquarius: ["S", "安"],
+  gemini: ["F", "変"],
+  virgo: ["F", "変"],
+  sagittarius: ["F", "変"],
+  pisces: ["F", "変"]
 };
 
 const numerologyReadings = {
@@ -481,14 +609,15 @@ function renderFortuneCard() {
   const numerology = cardNumerologySelect?.value || "3";
   const zodiac = getResultZodiac();
   const blood = cardBloodSelect?.value || "O";
+  const jobTitle = buildKetsuJobTitle(animal, elementId);
 
   fortuneCard.dataset.element = elementId;
   fortuneCardElementEn.textContent = element.en;
-  fortuneCardTitleText.textContent = `${element.ja}の${animal.nameJa}`;
+  fortuneCardTitleText.textContent = jobTitle;
   fortuneCardSigil.textContent = element.ja;
   fortuneCardImage.src = animal.image;
   fortuneCardImage.alt = animal.nameJa;
-  fortuneCardName.textContent = `${element.title}${animal.nameJa}`;
+  fortuneCardName.textContent = `${element.ja}の${animal.nameJa} / ${jobTitle}`;
   fortuneCardSummary.textContent = `${element.summary} 数秘${numerology}と${blood}型のクセをここに重ねます。`;
   fortuneCardNumber.textContent = numerology;
   fortuneCardBlood.textContent = blood;
@@ -507,9 +636,19 @@ function renderResultSummary(animal, elementId, numerology, zodiac, blood) {
   const zodiacReading = zodiacReadings[zodiac] || zodiacReadings.capricorn;
   const numberReading = numerologyReadings[numerology] || numerologyReadings[3];
   const animalCore = diagnosisWarehouse?.animalCore?.[animal.id];
+  const jobTitle = buildKetsuJobTitle(animal, elementId);
+  const ketsuCode = buildKetsuRpgCode(animal, elementId, numerology, zodiac);
+
+  if (resultJobTitle) {
+    resultJobTitle.textContent = jobTitle;
+  }
+
+  if (resultJobCode) {
+    resultJobCode.textContent = `${ketsuCode.code}型 - ${ketsuCode.tags.join(" / ")}`;
+  }
 
   if (resultSummaryTitle) {
-    resultSummaryTitle.textContent = buildResultSummaryTitle(animal, element, animalCore);
+    resultSummaryTitle.textContent = buildResultSummaryTitle(animal, element, animalCore, jobTitle);
   }
 
   if (resultSummaryBody) {
@@ -522,6 +661,8 @@ function renderResultSummary(animal, elementId, numerology, zodiac, blood) {
     const sortedScores = scores ? getSortedElementScores(scores) : [];
     const subElement = sortedScores.find((item) => item.id !== elementId && item.score > 0);
     const chips = [
+      `ジョブ ${jobTitle}`,
+      `K-RPG ${ketsuCode.code}型`,
       `動物 ${animal.nameJa}`,
       subElement ? `五行 ${element.ja} / サブ${subElement.element.ja}` : `五行 ${element.ja}`,
       `数秘 ${numerology}`,
@@ -541,9 +682,25 @@ function renderResultSummary(animal, elementId, numerology, zodiac, blood) {
   renderFiveElementScores(elementId);
 }
 
-function buildResultSummaryTitle(animal, element, animalCore) {
+function buildKetsuJobTitle(animal, elementId) {
+  return ketsuJobTitles[elementId]?.[animal.id] || `${elements[elementId]?.ja || "木"}の${animal.nameJa}`;
+}
+
+function buildKetsuRpgCode(animal, elementId, numerology, zodiac) {
+  const elementCode = ketsuElementCodes[elementId] || ketsuElementCodes.wood;
+  const animalCode = ketsuAnimalClassCodes[animal.id] || ["S", "援"];
+  const numberCode = ketsuNumberCodes[numerology] || ["I", "個"];
+  const zodiacCode = ketsuZodiacCodes[zodiac] || ["I", "先"];
+
+  return {
+    code: `${elementCode[0]}${animalCode[0]}${numberCode[0]}${zodiacCode[0]}`,
+    tags: [elementCode[1], animalCode[1], numberCode[1], zodiacCode[1]]
+  };
+}
+
+function buildResultSummaryTitle(animal, element, animalCore, jobTitle) {
   const animalTitle = animalCore?.resultTitle || `${animal.nameJa}タイプ`;
-  return `${element.title}、${animalTitle}`;
+  return `${jobTitle} - ${element.title}、${animalTitle}`;
 }
 
 function buildFiveElementScoreSentence(primaryElementId) {
@@ -625,7 +782,9 @@ function renderPdfReport(animal, elementId, numerology, zodiac, blood) {
   const numberReading = numerologyReadings[numerology] || numerologyReadings[3];
   const zodiacReading = zodiacReadings[zodiac] || zodiacReadings.capricorn;
   const bloodReading = bloodReadings[blood] || bloodReadings["不明"];
-  const resultTitle = buildResultSummaryTitle(animal, element, animalCore);
+  const jobTitle = buildKetsuJobTitle(animal, elementId);
+  const ketsuCode = buildKetsuRpgCode(animal, elementId, numerology, zodiac);
+  const resultTitle = buildResultSummaryTitle(animal, element, animalCore, jobTitle);
   const animalPhrase = animalCore?.oneLine || `${animal.nameJa}タイプの持ち味`;
   const summary = `${animalPhrase} ${buildFiveElementScoreSentence(elementId)}そこに、数秘${numerology}の「${numberReading.title}」、${zodiacReading.ja}の感性、${blood}型の対人傾向が重なります。`;
 
@@ -642,6 +801,8 @@ function renderPdfReport(animal, elementId, numerology, zodiac, blood) {
     const chips = [
       `動物 ${animal.nameJa}`,
       `五行 ${element.ja}`,
+      `ジョブ ${jobTitle}`,
+      `K-RPG ${ketsuCode.code}型`,
       `数秘 ${numerology}`,
       `星座 ${zodiacReading.ja}`,
       `血液型 ${blood}`
@@ -823,7 +984,9 @@ function buildResultCardImagePrompt(animal, elementId, numerology, zodiac, blood
   const numberReading = numerologyReadings[numerology] || numerologyReadings[3];
   const zodiacReading = zodiacReadings[zodiac] || zodiacReadings.capricorn;
   const bloodReading = bloodReadings[blood] || bloodReadings["不明"];
-  const resultTitle = buildResultSummaryTitle(animal, element, animalCore);
+  const jobTitle = buildKetsuJobTitle(animal, elementId);
+  const ketsuCode = buildKetsuRpgCode(animal, elementId, numerology, zodiac);
+  const resultTitle = buildResultSummaryTitle(animal, element, animalCore, jobTitle);
   const keywords = animalCore?.keywords?.slice(0, 4).join(", ") || "friendly, symbolic, personal";
   const strengths = animalCore?.strengths?.slice(0, 3).join(", ") || "warm presence, intuition, charm";
 
@@ -831,6 +994,7 @@ function buildResultCardImagePrompt(animal, elementId, numerology, zodiac, blood
     "Create a vertical 4:5 diagnosis result card illustration for Image 2.0. Canvas ratio 4:5, recommended size 1080x1350.",
     "",
     `Main title text: 「${resultTitle}」`,
+    `Fantasy job title: 「${jobTitle}」 / K-RPG code: ${ketsuCode.code}型 (${ketsuCode.tags.join(" / ")}).`,
     `Small readable badge labels: 「動物 ${animal.nameJa}」「五行 ${element.ja}」「数秘 ${numerology}」「星座 ${zodiacReading.ja}」「血液型 ${blood}型」`,
     `Main character: a cute original pixel art ${animal.nameJa} pet mascot, inspired by a Japanese fortune-telling result, not realistic, not scary.`,
     `Personality mood: ${animalCore?.resultTitle || animal.nameJa} / ${animalCore?.oneLine || "gentle personal charm"}.`,
