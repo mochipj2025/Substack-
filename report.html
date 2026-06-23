@@ -116,36 +116,61 @@
 
     .hero {
       align-items: center;
-      background: #ffffff;
+      background: linear-gradient(135deg, #ffffff 0%, #fffaf4 100%);
       border: 1px solid #eadfd4;
       border-radius: 12px;
       display: grid;
-      gap: 24px;
-      grid-template-columns: 180px 1fr;
+      gap: 26px;
+      grid-template-columns: 170px 1fr;
       margin-top: 26px;
       padding: 24px;
     }
 
     .hero img {
-      height: 160px;
+      background: #ffffff;
+      border: 1px solid #eadfd4;
+      border-radius: 16px;
+      height: 154px;
       image-rendering: pixelated;
       object-fit: contain;
-      width: 160px;
+      padding: 14px;
+      width: 154px;
+    }
+
+    .job-title {
+      color: #2c3e50;
+      font-size: 30px;
+      font-weight: 900;
+      line-height: 1.18;
+      margin: 7px 0 0;
+    }
+
+    .job-code {
+      background: #2c3e50;
+      border-radius: 999px;
+      color: #ffffff;
+      display: inline-flex;
+      font-size: 12px;
+      font-weight: 900;
+      margin-top: 12px;
+      padding: 7px 12px;
     }
 
     .summary-title {
-      color: #2c3e50;
-      font-size: 22px;
+      color: #bf5f0f;
+      font-size: 15px;
       font-weight: 900;
-      line-height: 1.45;
-      margin: 6px 0 0;
+      line-height: 1.65;
+      margin: 13px 0 0;
     }
 
     .summary-body {
       color: #3d4752;
-      font-size: 12px;
+      font-size: 12.5px;
       font-weight: 700;
-      margin: 10px 0 0;
+      line-height: 1.9;
+      margin: 9px 0 0;
+      max-width: 56em;
     }
 
     .chips {
@@ -156,7 +181,8 @@
     }
 
     .chip {
-      background: #fff4e8;
+      background: #ffffff;
+      border: 1px solid #eadfd4;
       border-radius: 999px;
       color: #2c3e50;
       font-size: 11px;
@@ -169,7 +195,7 @@
       border: 1px solid #eadfd4;
       border-radius: 12px;
       margin-top: 18px;
-      padding: 18px;
+      padding: 20px;
     }
 
     .score-row {
@@ -210,14 +236,15 @@
       border: 1px solid #eadfd4;
       border-radius: 10px;
       break-inside: avoid;
-      padding: 14px;
+      padding: 15px;
     }
 
     .card p {
       color: #4d5965;
-      font-size: 11px;
+      font-size: 11.5px;
       font-weight: 700;
-      margin: 6px 0 0;
+      line-height: 1.85;
+      margin: 7px 0 0;
     }
 
     .footer-note {
@@ -261,6 +288,19 @@
       .grid {
         grid-template-columns: 1fr;
       }
+
+      .hero {
+        gap: 18px;
+      }
+
+      .hero img {
+        height: 132px;
+        width: 132px;
+      }
+
+      .job-title {
+        font-size: 25px;
+      }
     }
   </style>
 </head>
@@ -282,6 +322,8 @@
       <img id="animal-image" src="assets/animals/tanuki.png" alt="">
       <div>
         <p class="kicker">Result Summary</p>
+        <div id="job-title" class="job-title">称号を読み込み中</div>
+        <div id="job-code" class="job-code">----型</div>
         <div id="summary-title" class="summary-title">診断結果を読み込み中</div>
         <p id="summary-body" class="summary-body"></p>
         <div id="summary-chips" class="chips"></div>
@@ -307,6 +349,6 @@
     <p class="footer-note">ケツ印一家 / Personal diagnosis report</p>
   </main>
 
-  <script src="report.js?v=20260624-01" defer></script>
+  <script src="report.js?v=20260624-02" defer></script>
 </body>
 </html>

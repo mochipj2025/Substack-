@@ -166,16 +166,19 @@ async function renderReport() {
   const bloodReading = bloodReadings[blood] || bloodReadings.不明;
   const jobTitle = buildKetsuJobTitle(animal, elementId);
   const ketsuCode = buildKetsuRpgCode(animal, elementId, numerology, zodiacId);
-  const title = `${jobTitle} - ${element.title}、${animalCore?.resultTitle || `${animal.nameJa}タイプ`}`;
+  const resultTitle = `${element.title}、${animalCore?.resultTitle || `${animal.nameJa}タイプ`}`;
+  const documentTitle = `${jobTitle} - ${resultTitle}`;
   const scores = getScores();
   const scoreText = scores
     ? `五行では${element.ja}が${scores[elementId] || 0}点で強く出ています。`
     : `${element.ja}の「${element.title}」力が出ています。`;
 
-  document.title = `${title} - ケツ印どうぶつ診断`;
+  document.title = `${documentTitle} - ケツ印どうぶつ診断`;
   document.querySelector("#animal-image").src = animal.image;
   document.querySelector("#animal-image").alt = animal.nameJa;
-  document.querySelector("#summary-title").textContent = title;
+  document.querySelector("#job-title").textContent = jobTitle;
+  document.querySelector("#job-code").textContent = `${ketsuCode.code}型 - ${ketsuCode.tags.join(" / ")}`;
+  document.querySelector("#summary-title").textContent = resultTitle;
   document.querySelector("#summary-body").textContent = `${animalCore?.oneLine || `${animal.nameJa}タイプの持ち味`} ${scoreText}${element.summary} そこに、数秘${numerology}の「${numberReading[0]}」、${zodiacReading[0]}の感性、${blood}型の対人傾向が重なります。`;
 
   addChip(`動物 ${animal.nameJa}`);
