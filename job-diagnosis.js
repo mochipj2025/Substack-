@@ -114,6 +114,38 @@ const questions = [
       option("support", "earth", "deer", { harmony: 3, resilience: 1 }, "あの人は心を守ってくれた"),
       option("magic", "metal", "koala", { insight: 2, craft: 2 }, "あの人は読めないけどすごい")
     ]
+  },
+  {
+    text: "成果を出す時、最初に整えたいものは？",
+    options: [
+      option("guard", "earth", "tiger", { resilience: 2, craft: 2 }, "続けられる土台と役割分担"),
+      option("magic", "water", "koala", { insight: 3, harmony: 1 }, "見えない流れと本音の整理"),
+      option("attack", "fire", "cheetah", { action: 3, charm: 1 }, "場の勢いと最初の一手")
+    ]
+  },
+  {
+    text: "あなたの魅力が出やすい瞬間は？",
+    options: [
+      option("support", "wood", "deer", { harmony: 2, charm: 2 }, "誰かが安心して本音を話せた時"),
+      option("attack", "metal", "black-panther", { action: 1, craft: 2, charm: 1 }, "自分の美学で選び抜いた時"),
+      option("magic", "fire", "monkey", { insight: 2, charm: 2 }, "ひらめきで空気を変えた時")
+    ]
+  },
+  {
+    text: "大きな壁が来た時、どう越えたい？",
+    options: [
+      option("guard", "metal", "elephant", { craft: 3, resilience: 1 }, "分解して、確実に片づける"),
+      option("attack", "wood", "wolf", { action: 2, insight: 2 }, "自分の道を見つけて突破する"),
+      option("support", "earth", "sheep", { harmony: 2, resilience: 2 }, "仲間と支え合って越える")
+    ]
+  },
+  {
+    text: "これから伸ばしたい才能は？",
+    options: [
+      option("magic", "water", "pegasus", { insight: 2, charm: 2 }, "まだ見ぬ可能性を読む感性"),
+      option("support", "fire", "tanuki", { harmony: 2, charm: 2 }, "人を巻き込むあたたかさ"),
+      option("guard", "wood", "lion", { action: 1, resilience: 2, craft: 1 }, "大きく育てて守る力")
+    ]
   }
 ];
 
@@ -218,7 +250,7 @@ function renderResult(result) {
   resultCode.textContent = `${result.code}型 - ${element.ja} / ${jobClass.ja}`;
   resultTitle.textContent = title;
   resultSubtitle.textContent = `${playerName}さんは、${jobClass.label}力を持つ${animal.ja}タイプ`;
-  resultBody.textContent = `${animal.text} ${element.label}の属性が強く、今は「${jobClass.ja}」として力を出しやすい状態です。`;
+  resultBody.textContent = `${animal.text} ${element.label}の属性が強く、今は「${jobClass.ja}」として力を出しやすい状態です。特に${getTopStats(result.scores.stats, 2).join("と")}が伸びているので、得意な役割を先に決めるほど動きやすくなります。`;
 
   resultTags.replaceChildren(
     tag(`属性 ${element.ja}`),
@@ -252,11 +284,19 @@ function tag(text) {
   return item;
 }
 
+function getTopStats(stats, limit = 2) {
+  return Object.entries(stats)
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, limit)
+    .map(([id]) => statLabels[id]);
+}
+
 function buildFortune(result, title) {
   const strongestStat = topKey(result.scores.stats);
   const statName = statLabels[strongestStat];
   const element = elementData[result.element];
-  return `${title}の運勢は、${statName}を使うほど上がります。${element.ja}の属性が強いので、無理に全部を背負うより、自分の得意な動き方をひとつ決めると流れが整います。`;
+  const secondStat = getTopStats(result.scores.stats, 2)[1] || statName;
+  return `${title}の運勢は、${statName}を使うほど上がります。${element.ja}の属性が強いので、無理に全部を背負うより、${statName}と${secondStat}が活きる場所を選ぶと流れが整います。`;
 }
 
 renderQuestions();
